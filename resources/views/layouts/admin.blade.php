@@ -39,7 +39,7 @@
         <!-- Sidebar -->
         <div id="sidebar"
             class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 z-30 transition duration-200 ease-in-out md:flex md:flex-shrink-0">
-            <div class="flex flex-col w-55 h-full bg-blue-800"> <!-- Added h-full here -->
+            <div class="flex flex-col w-60 h-full bg-blue-800"> <!-- Added h-full here -->
                 <div class="flex items-center justify-between h-16 flex-shrink-0 px-6 bg-blue-900">
                     <h1 class="text-white text-xl font-semibold">Laravel</h1>
                     <button id="closeSidebar" class="md:hidden text-white">
@@ -49,33 +49,38 @@
                 <div class="flex-1 flex flex-col overflow-y-auto h-[calc(100%-4rem)]"> <!-- Added height calculation -->
                     <nav class="flex-1 px-4 py-4 space-y-1">
                         <a href="{{ route('home.index') }}"
-                            class="text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                            class="text-white group flex items-center px-2 py-2 text-lg font-medium rounded-md">
                             <i class="fas fa-home mr-3 text-white"></i>
                             Dashboard
                         </a>
-                        <a href="#"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        <a href="{{ route('faculties.index') }}"
+                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                            <i class="fas fa-users mr-3 text-white"></i>
+                            Students
+                        </a>
+                        <a href="{{ route('faculties.index') }}"
+                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
                             <i class="fas fa-users mr-3 text-white"></i>
                             Faculties
                         </a>
-                        <a href="#"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                            <i class="fas fa-folder mr-3 text-white"></i>
-                            Projects
+                        <a href="{{ route('courses.index') }}"
+                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                            <i class="fas fa-book mr-3 text-white"></i>
+                            Courses
                         </a>
-                        <a href="#"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                            <i class="fas fa-calendar mr-3 text-white"></i>
-                            Calendar
+                        <a href="{{ route('sections.index') }}"
+                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                            <i class="fas fa-clock mr-3 text-white"></i>
+                            Sections
                         </a>
                         <a href="{{ route('users.index') }}"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
                             <i class="fas fa-user mr-3 text-white"></i>
                             Users
                         </a>
                         <div class="relative group">
                             <button
-                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center justify-between w-full px-2 py-2 text-base font-medium rounded-md">
+                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center justify-between w-full px-2 py-2 text-lg font-medium rounded-md">
                                 <div class="flex items-center">
                                     <i class="fas fa-cog mr-3 text-white"></i>
                                     <span>Settings</span>
@@ -86,17 +91,17 @@
 
                             <div class="ml-6 mt-1 space-y-1 hidden group-hover:block">
                                 <a href="{{ route('roles.index') }}"
-                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
                                     <i class="fas fa-ruler mr-3 text-white"></i>
                                     Roles
                                 </a>
                                 <a href="{{ route('permissions.index') }}"
-                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
                                     <i class="fas fa-cog mr-3 text-white"></i>
                                     Permissions
                                 </a>
                                 <a href="{{ route('variables.index') }}"
-                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
                                     <i class="fas fa-cog mr-3 text-white"></i>
                                     Variables
                                 </a>

@@ -60,8 +60,6 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
                 'login_hint' => $request->input('password'),
                 'status' => 'active',
-                'created_by' => Auth::user()->name ?? 'NA',
-                'updated_by' => Auth::user()->name ?? 'N/A',
             ]);
 
             $role = Role::findById($request->roleId);

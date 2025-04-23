@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentSectionController;
 use App\Http\Controllers\SystemVariableController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -63,4 +68,55 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('password/email', 'sendResetLinkEmail')->name('password.email');
     Route::get('password/reset/{token}', 'showResetForm')->name('password.reset');
     Route::post('password/reset', 'reset')->name('password.update');
+});
+
+Route::controller(FacultyController::class)->group(function () {
+    Route::get('faculties', 'index')->name('faculties.index');
+    Route::get('faculties/create', 'create')->name('faculties.create');
+    Route::post('faculties', 'store')->name('faculties.store');
+    Route::get('faculties/{faculty}', 'show')->name('faculties.show');
+    Route::get('faculties/{faculty}/edit', 'edit')->name('faculties.edit');
+    Route::put('faculties/{faculty}', 'update')->name('faculties.update');
+    Route::delete('faculties/{faculty}', 'destroy')->name('faculties.destroy');
+});
+
+
+Route::controller(CourseController::class)->group(function () {
+    Route::get('courses', 'index')->name('courses.index');
+    Route::get('courses/create', 'create')->name('courses.create');
+    Route::post('courses', 'store')->name('courses.store');
+    Route::get('courses/{course}', 'show')->name('courses.show');
+    Route::get('courses/{course}/edit', 'edit')->name('courses.edit');
+    Route::put('courses/{course}', 'update')->name('courses.update');
+    Route::delete('courses/{course}', 'destroy')->name('courses.destroy');
+});
+
+Route::controller(SectionController::class)->group(function () {
+    Route::get('sections', 'index')->name('sections.index');
+    Route::get('sections/create', 'create')->name('sections.create');
+    Route::post('sections', 'store')->name('sections.store');
+    Route::get('sections/{section}', 'show')->name('sections.show');
+    Route::get('sections/{section}/edit', 'edit')->name('sections.edit');
+    Route::put('sections/{section}', 'update')->name('sections.update');
+    Route::delete('sections/{section}', 'destroy')->name('sections.destroy');
+});
+
+Route::controller(StudentController::class)->group(function () {
+    Route::get('students', 'index')->name('students.index');
+    Route::get('students/create', 'create')->name('students.create');
+    Route::post('students', 'store')->name('students.store');
+    Route::get('students/{student}', 'show')->name('students.show');
+    Route::get('students/{student}/edit', 'edit')->name('students.edit');
+    Route::put('students/{student}', 'update')->name('students.update');
+    Route::delete('students/{student}', 'destroy')->name('students.destroy');
+});
+
+Route::controller(StudentSectionController::class)->group(function () {
+    Route::get('student-sections', 'index')->name('student-sections.index');
+    Route::get('student-sections/create', 'create')->name('student-sections.create');
+    Route::post('student-sections', 'store')->name('student-sections.store');
+    Route::get('student-sections/{studentSection}', 'show')->name('student-sections.show');
+    Route::get('student-sections/{studentSection}/edit', 'edit')->name('student-sections.edit');
+    Route::put('student-sections/{studentSection}', 'update')->name('student-sections.update');
+    Route::delete('student-sections/{studentSection}', 'destroy')->name('student-sections.destroy');
 });

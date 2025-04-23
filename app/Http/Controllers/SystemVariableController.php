@@ -59,6 +59,14 @@ class SystemVariableController extends Controller
         }
     }
 
+    public function edit(SystemVariable $systemVariable)
+    {
+        return view('system_variables.edit', [
+            'title' => 'Edit System Variable',
+            'variable' => $systemVariable,
+        ]);
+    }
+
     public function destroy(SystemVariable $systemVariable)
     {
         $systemVariable->delete();
