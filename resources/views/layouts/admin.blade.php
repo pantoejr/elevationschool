@@ -53,7 +53,7 @@
                             <i class="fas fa-home mr-3 text-white"></i>
                             Dashboard
                         </a>
-                        <a href="{{ route('faculties.index') }}"
+                        <a href="{{ route('students.index') }}"
                             class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
                             <i class="fas fa-users mr-3 text-white"></i>
                             Students

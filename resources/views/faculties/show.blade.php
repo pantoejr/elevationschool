@@ -147,9 +147,9 @@
                                         <td class="px-4 py-2 border-b text-sm text-gray-700">{{ $attachment->file_name }}</td>
                                         
                                         <td class="px-4 py-2 border-b text-sm text-gray-700">
-                                            <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank"
+                                            <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank" download
                                                 class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                                                View
+                                                Download
                                             </a>
                                             {{-- <form action="{{ route('attachments.destroy', $attachment->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this attachment?');">
                                             @csrf

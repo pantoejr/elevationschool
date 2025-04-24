@@ -67,6 +67,41 @@ class SystemVariableController extends Controller
         ]);
     }
 
+    public function update(SystemVariable $systemVariable, Request $request)
+    {
+        $validatedData = $request->validate([
+            'type' => 'required|in:shortname,name,logo,favicon,email,phone,contact,address',
+            'value' => 'required',
+        ]);
+
+        try {
+            if ($validatedData['type'] === 'logo' || $validatedData['type'] === 'favicon' && $request->hasFile('value')) {
+                $filePath = $request->file('value')->store('system_variables', 'public');
+                $validatedData['value'] = $filePath;
+            }
+
+            $systemVariable->update($validatedData);
+
+            return redirect()->route('variables.index')
+                ->with('success', 'System variable updated successfully')
+                ->with('flag', 'success');
+        } catch (Exception $ex) {
+            Log::error('Error updating system variable: ' . $ex->getMessage());
+
+            return back()->with('success', 'Error: ' . $ex->getMessage())
+                ->with('flag', 'danger');
+        }
+
+    }
+
+    public function show(SystemVariable $systemVariable)
+    {
+        return view('system_variables.show', [
+            'title' => 'System Variable Details',
+            'variable' => $systemVariable,
+        ]);
+    }
+
     public function destroy(SystemVariable $systemVariable)
     {
         $systemVariable->delete();
