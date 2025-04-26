@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Faculty;
+use App\Models\Section;
+use App\Models\StudentSection;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -114,5 +116,9 @@ class CourseController extends Controller
         return to_route('courses.index')
             ->with('success', 'Course deleted successfully')
             ->with('flag', 'success');
+    }
+
+    public function courseSections($courseId){
+        $courseSections = Section::where('course_id', $courseId)->get();
     }
 }
