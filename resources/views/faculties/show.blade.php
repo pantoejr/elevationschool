@@ -17,10 +17,7 @@
                                 class="{{ $faculty->photo ? '' : 'hidden' }} w-full h-full object-cover">
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500">Click the camera icon to upload a photo</p>
                 </div>
-
-                <!-- Personal Information Section -->
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">Personal Information</h2>
 

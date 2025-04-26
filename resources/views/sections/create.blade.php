@@ -59,17 +59,27 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label for="status" class="block text-sm font-medium text-gray-700">Currency</label>
-                        <select name="status" id="status"
-                            class="mt-1 block w-full border-gray-300 p-4 border border-gray-300  rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-                        @error('status')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label for="no_of_students" class="block text-sm font-medium text-gray-700">No of Students</label>
+                            <input type="number" name="no_of_students" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            @error('no_of_students')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                            <select name="status" id="status"
+                                class="mt-1 block w-full border-gray-300 p-4 border border-gray-300  rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                            @error('status')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
+                    
                     <div class="flex justify-between pt-6  border-gray-200">
                         <a href="{{ route('sections.index') }}"
                             class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">

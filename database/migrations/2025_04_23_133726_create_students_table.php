@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_number')->nullable();
             $table->enum('computer_literacy', ['Beginner', 'Intermediate', 'Advanced', 'Professional'])->nullable();
-            $table->string('education_status')->nullable(); // e.g. High School Diploma, College/University, etc.
+            $table->string('education_status')->nullable();
             $table->string('course_applying_for')->nullable();
             $table->boolean('is_new')->default(true);
             $table->enum('status', ['active', 'inactive'])->default('active');

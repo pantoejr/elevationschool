@@ -44,14 +44,22 @@
                                 class="mt-1 block w-full p-4  rounded-md bg-gray-100 focus:outline-none">
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="status" id="status" disabled
-                            class="mt-1 block w-full p-4  rounded-md bg-gray-100 focus:outline-none">
-                            <option value="active" {{ $section->status == 'active' ? 'selected' : '' }}>Active</option>
-                            <option value="inactive" {{ $section->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                        </select>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                        <div class="mb-4">
+                            <label for="no_of_students" class="block text-sm font-medium text-gray-700">No of Students</label>
+                            <input type="number" name="no_of_students" id="no_of_students" value="{{ $section->no_of_students }}" disabled
+                                class="mt-1 block w-full p-4  rounded-md bg-gray-100 focus:outline-none">
+                        </div>
+                        <div class="mb-4">
+                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                            <select name="status" id="status" disabled
+                                class="mt-1 block w-full p-4  rounded-md bg-gray-100 focus:outline-none">
+                                <option value="active" {{ $section->status == 'active' ? 'selected' : '' }}>Active</option>
+                                <option value="inactive" {{ $section->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                            </select>
+                        </div>
                     </div>
+                    
                     <div class="flex justify-between pt-6">
                         <a href="{{ route('sections.index') }}"
                             class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">

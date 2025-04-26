@@ -25,7 +25,10 @@
                             class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
                             Course
                         </th>
-
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
+                            No. Of Students
+                        </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
                             Status
@@ -54,6 +57,9 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
                                 {{ $section->course->name }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+                                {{ $section->no_of_students }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('faculty_id')->constrained()->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('no_of_students')->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

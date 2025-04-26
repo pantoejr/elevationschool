@@ -9,7 +9,7 @@
                 </a>
             </div>
 
-            <form action="{{ route('variables.update', $variable->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('variables.update', ['systemVariable' => $variable ]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">

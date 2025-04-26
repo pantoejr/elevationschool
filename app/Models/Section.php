@@ -13,6 +13,7 @@ class Section extends Model
         'start_date',
         'end_date',
         'status',
+        'no_of_students',
         'created_by',
         'updated_by'
     ];

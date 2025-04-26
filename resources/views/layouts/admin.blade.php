@@ -48,66 +48,79 @@
                 </div>
                 <div class="flex-1 flex flex-col overflow-y-auto h-[calc(100%-4rem)]"> <!-- Added height calculation -->
                     <nav class="flex-1 px-4 py-4 space-y-1">
-                        <a href="{{ route('home.index') }}"
-                            class="text-white group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                            <i class="fas fa-home mr-3 text-white"></i>
-                            Dashboard
-                        </a>
-                        <a href="{{ route('students.index') }}"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                            <i class="fas fa-users mr-3 text-white"></i>
-                            Students
-                        </a>
-                        <a href="{{ route('faculties.index') }}"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                            <i class="fas fa-users mr-3 text-white"></i>
-                            Faculties
-                        </a>
-                        <a href="{{ route('courses.index') }}"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                            <i class="fas fa-book mr-3 text-white"></i>
-                            Courses
-                        </a>
-                        <a href="{{ route('sections.index') }}"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                            <i class="fas fa-clock mr-3 text-white"></i>
-                            Sections
-                        </a>
-                        <a href="{{ route('users.index') }}"
-                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                            <i class="fas fa-user mr-3 text-white"></i>
-                            Users
-                        </a>
-                        <div class="relative group">
-                            <button
-                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center justify-between w-full px-2 py-2 text-lg font-medium rounded-md">
-                                <div class="flex items-center">
-                                    <i class="fas fa-cog mr-3 text-white"></i>
-                                    <span>Settings</span>
+                        @can('view-dashboard')
+                            <a href="{{ route('home.index') }}"
+                                class="text-white group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                <i class="fas fa-home mr-3 text-white"></i>
+                                Dashboard
+                            </a>
+                        @endcan
+                        @can('view-students')
+                            <a href="{{ route('students.index') }}"
+                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                <i class="fas fa-users mr-3 text-white"></i>
+                                Students
+                            </a>
+                        @endcan
+                        @can('view-faculties')
+                            <a href="{{ route('faculties.index') }}"
+                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                <i class="fas fa-users mr-3 text-white"></i>
+                                Faculties
+                            </a>
+                        @endcan
+                        @can('view-courses')
+                            <a href="{{ route('courses.index') }}"
+                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                <i class="fas fa-book mr-3 text-white"></i>
+                                Courses
+                            </a>
+                        @endcan
+                        @can('view-sections')
+                            <a href="{{ route('sections.index') }}"
+                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                <i class="fas fa-clock mr-3 text-white"></i>
+                                Sections
+                            </a>
+                        @endcan
+                        @can('view-users')
+                            <a href="{{ route('users.index') }}"
+                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                <i class="fas fa-user mr-3 text-white"></i>
+                                Users
+                            </a>
+                        @endcan
+                        @can('view-settings')
+                            <div class="relative group">
+                                <button
+                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center justify-between w-full px-2 py-2 text-lg font-medium rounded-md">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-cog mr-3 text-white"></i>
+                                        <span>Settings</span>
+                                    </div>
+                                    <i
+                                        class="fas fa-chevron-down text-white text-xs group-hover:rotate-180 transition-transform duration-200"></i>
+                                </button>
+
+                                <div class="ml-6 mt-1 space-y-1 hidden group-hover:block">
+                                    <a href="{{ route('roles.index') }}"
+                                        class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                        <i class="fas fa-ruler mr-3 text-white"></i>
+                                        Roles
+                                    </a>
+                                    <a href="{{ route('permissions.index') }}"
+                                        class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                        <i class="fas fa-cog mr-3 text-white"></i>
+                                        Permissions
+                                    </a>
+                                    <a href="{{ route('variables.index') }}"
+                                        class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                        <i class="fas fa-cog mr-3 text-white"></i>
+                                        Variables
+                                    </a>
                                 </div>
-                                <i
-                                    class="fas fa-chevron-down text-white text-xs group-hover:rotate-180 transition-transform duration-200"></i>
-                            </button>
-
-                            <div class="ml-6 mt-1 space-y-1 hidden group-hover:block">
-                                <a href="{{ route('roles.index') }}"
-                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                                    <i class="fas fa-ruler mr-3 text-white"></i>
-                                    Roles
-                                </a>
-                                <a href="{{ route('permissions.index') }}"
-                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                                    <i class="fas fa-cog mr-3 text-white"></i>
-                                    Permissions
-                                </a>
-                                <a href="{{ route('variables.index') }}"
-                                    class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                                    <i class="fas fa-cog mr-3 text-white"></i>
-                                    Variables
-                                </a>
                             </div>
-                        </div>
-
+                        @endcan
                     </nav>
                 </div>
             </div>
