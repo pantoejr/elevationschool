@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if ($fullName)
-        <title>{{ $fullName->value }} | {{ $title }}</title>
+        <title>{{ $fullName->value }} | {{ env('APP_NAME') }}</title>
     @else
         <title>{{ env('APP_NAME') }}</title>
     @endif
@@ -103,21 +103,28 @@
                                 </button>
 
                                 <div class="ml-6 mt-1 space-y-1 hidden group-hover:block">
-                                    <a href="{{ route('roles.index') }}"
-                                        class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                                        <i class="fas fa-ruler mr-3 text-white"></i>
-                                        Roles
-                                    </a>
-                                    <a href="{{ route('permissions.index') }}"
-                                        class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                                        <i class="fas fa-cog mr-3 text-white"></i>
-                                        Permissions
-                                    </a>
-                                    <a href="{{ route('variables.index') }}"
-                                        class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
-                                        <i class="fas fa-cog mr-3 text-white"></i>
-                                        Variables
-                                    </a>
+                                    @can('view-roles')
+                                        <a href="{{ route('roles.index') }}"
+                                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                            <i class="fas fa-ruler mr-3 text-white"></i>
+                                            Roles
+                                        </a>
+                                    @endcan
+                                    @can('view-permissions')
+                                        <a href="{{ route('permissions.index') }}"
+                                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                            <i class="fas fa-cog mr-3 text-white"></i>
+                                            Permissions
+                                        </a>
+                                    @endcan
+                                    @can('view-variables')
+                                        <a href="{{ route('variables.index') }}"
+                                            class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                            <i class="fas fa-cog mr-3 text-white"></i>
+                                            Variables
+                                        </a>
+                                    @endcan
+
                                 </div>
                             </div>
                         @endcan
@@ -251,18 +258,12 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         form.submit();
-
-                        // Swal.fire({
-                        //     title: "Success",
-                        //     text: "Record deleted successfully",
-                        //     icon: "success",
-                        // });
-                        // location.reload();
                     }
                 });
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     @livewireScripts
 </body>
 

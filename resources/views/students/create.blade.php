@@ -274,7 +274,7 @@
 
                 <!-- Form Actions -->
                 <div class="flex justify-between pt-6 border-t border-gray-200">
-                    <a href="{{ route('faculties.index') }}"
+                    <a href="{{ route('students.index') }}"
                         class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">
                         <i class="fas fa-arrow-left mr-2"></i> Back
                     </a>

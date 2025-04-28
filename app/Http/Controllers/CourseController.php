@@ -37,8 +37,6 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'cost' => 'required|numeric',
-            'currency' => 'required|string|in:USD,LRD',
             'duration' => 'required|string|in:one_month,two_months,three_months,four_months,five_months,six_months',
             'description' => 'nullable|string|max:1000',
         ]);
@@ -47,8 +45,6 @@ class CourseController extends Controller
 
             Course::create([
                 'name' => $request->name,
-                'cost' => $request->cost,
-                'currency' => $request->currency,
                 'duration' => $request->duration,
                 'description' => $request->description,
                 'created_by' => Auth::user()->name,
@@ -77,8 +73,6 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'cost' => 'required|numeric',
-            'currency' => 'required|string|in:USD,LRD',
             'duration' => 'required|string|in:one_month,two_months,three_months,four_months,five_months,six_months',
             'description' => 'nullable|string|max:1000',
         ]);
@@ -86,8 +80,6 @@ class CourseController extends Controller
         try {
             $course->update([
                 'name' => $request->name,
-                'cost' => $request->cost,
-                'currency' => $request->currency,
                 'duration' => $request->duration,
                 'description' => $request->description,
                 'updated_by' => Auth::user()->name,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Faculty;
 use App\Models\Section;
+use App\Models\Student;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -42,10 +43,12 @@ class SectionController extends Controller
             'name' => 'required|unique:sections,name,except,id',
             'course_id' => 'required|exists:courses,id',
             'faculty_id' => 'required|exists:faculties,id',
-            'no_of_students' => 'required|numeric',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after:start_date',
             'status' => 'required|in:active,inactive',
+            'max_students' => 'required|numeric',
+            'course_cost' => 'required|numeric',
+            'currency' => 'required|in:USD,LRD',
         ]);
 
         try{
@@ -54,10 +57,12 @@ class SectionController extends Controller
                 'name' => $request->name,
                 'course_id' => $request->course_id,
                 'faculty_id' => $request->faculty_id,
-                'no_of_students' => $request->no_of_students,
+                'max_students' => $request->max_students,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
                 'status' => $request->status,
+                'course_cost' => $request->course_cost,
+                'currency' => $request->currency,
                 'created_by' => Auth::user()->name,
                 'updated_by' => Auth::user()->name,
             ]);
@@ -88,8 +93,10 @@ class SectionController extends Controller
             'name' => 'required|unique:sections,name,'.$section->id,
             'course_id' => 'required|exists:courses,id',
             'faculty_id' => 'required|exists:faculties,id',
+            'max_students' => 'required|numeric',
+            'course_cost' => 'required|numeric',
+            'currency' => 'required|in:USD,LRD',
             'start_date' => 'nullable|date',
-            'no_of_students' => 'required|numeric',
             'end_date' => 'nullable|date|after:start_date',
             'status' => 'required|in:active,inactive',
         ]);
@@ -100,7 +107,9 @@ class SectionController extends Controller
                 'course_id' => $request->course_id,
                 'faculty_id' => $request->faculty_id,
                 'start_date' => $request->start_date,
-                'no_of_students' => $request->no_of_students,
+                'max_students' => $request->max_students,
+                'course_cost' => $request->course_cost,
+                'currency' => $request->currency,
                 'end_date' => $request->end_date,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->name,

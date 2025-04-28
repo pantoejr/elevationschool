@@ -12,50 +12,51 @@ use App\Http\Controllers\StudentSectionController;
 use App\Http\Controllers\SystemVariableController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home.index');
 });
 
 Route::controller(PermissionController::class)->group(function () {
-    Route::get('permissions', 'index')->name('permissions.index');
-    Route::get('permissions/create', 'create')->name('permissions.create');
-    Route::post('permissions', 'store')->name('permissions.store');
-    Route::get('permissions/{permission}/edit', 'edit')->name('permissions.edit');
-    Route::put('permissions/{permission}', 'update')->name('permissions.update');
-    Route::delete('permissions/{permission}', 'destroy')->name('permissions.destroy');
+    Route::get('permissions', 'index')->name('permissions.index')->can('view-permissions');
+    Route::get('permissions/create', 'create')->name('permissions.create')->can('add-permission');
+    Route::post('permissions', 'store')->name('permissions.store')->can('add-permission');
+    Route::get('permissions/{permission}/edit', 'edit')->name('permissions.edit')->can('edit-permission');
+    Route::put('permissions/{permission}', 'update')->name('permissions.update')->can('update-permission');
+    Route::delete('permissions/{permission}', 'destroy')->name('permissions.destroy')->can('delete-permission');
 });
 
 Route::controller(RoleController::class)->group(function () {
-    Route::get('roles', 'index')->name('roles.index');
-    Route::get('roles/create', 'create')->name('roles.create');
-    Route::post('roles', 'store')->name('roles.store');
-    Route::get('roles/{role}', 'show')->name('roles.show');
-    Route::get('roles/{role}/edit', 'edit')->name('roles.edit');
-    Route::put('roles/{role}', 'update')->name('roles.update');
-    Route::delete('roles/{role}', 'destroy')->name('roles.destroy');
+    Route::get('roles', 'index')->name('roles.index')->can('view-roles');
+    Route::get('roles/create', 'create')->name('roles.create')->can('add-role');
+    Route::post('roles', 'store')->name('roles.store')->can('add-role');
+    Route::get('roles/{role}', 'show')->name('roles.show')->can('view-role-details');
+    Route::get('roles/{role}/edit', 'edit')->name('roles.edit')->can('edit-role');
+    Route::put('roles/{role}', 'update')->name('roles.update')->can('update-role');
+    Route::delete('roles/{role}', 'destroy')->name('roles.destroy')->can('delete-role');
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('users', 'index')->name('users.index');
-    Route::get('users/create', 'create')->name('users.create');
-    Route::post('users/create', 'store')->name('users.store');
-    Route::get('users/{user}', 'show')->name('users.show');
-    Route::get('users/{user}/edit', 'edit')->name('users.edit');
-    Route::put('users/{user}/edit', 'update')->name('users.update');
-    Route::delete('users/{user}/delete', 'destroy')->name('users.destroy');
+    Route::get('users', 'index')->name('users.index')->can('view-users');
+    Route::get('users/create', 'create')->name('users.create')->can('add-user');
+    Route::post('users/create', 'store')->name('users.store')->can('add-user');
+    Route::get('users/{user}', 'show')->name('users.show')->can('view-user-details');
+    Route::get('users/{user}/edit', 'edit')->name('users.edit')->can('edit-user');
+    Route::put('users/{user}/edit', 'update')->name('users.update')->can('update-user');
+    Route::delete('users/{user}/delete', 'destroy')->name('users.destroy')->can('delete-user');
     Route::get('profile', 'profile')->name('users.profile');
 });
 
 Route::controller(SystemVariableController::class)->group(function () {
-    Route::get('variables', 'index')->name('variables.index');
-    Route::get('variables/create', 'create')->name('variables.create');
-    Route::post('variables', 'store')->name('variables.store');
-    Route::get('variables/{systemVariable}/edit', 'edit')->name('variables.edit');
-    Route::put('variables/{systemVariable}', 'update')->name('variables.update');
-    Route::delete('variables/{systemVariable}', 'destroy')->name('variables.destroy');
-    Route::get('variables/{systemVariable}/show', 'show')->name('variables.show');
+    Route::get('variables', 'index')->name('variables.index')->can('view-variables');
+    Route::get('variables/create', 'create')->name('variables.create')->can('add-variable');
+    Route::post('variables', 'store')->name('variables.store')->can('add-variable');
+    Route::get('variables/{systemVariable}/edit', 'edit')->name('variables.edit')->can('edit-variable');
+    Route::put('variables/{systemVariable}', 'update')->name('variables.update')->can('update-variable');
+    Route::delete('variables/{systemVariable}', 'destroy')->name('variables.destroy')->can('delete-variable');
+    Route::get('variables/{systemVariable}/show', 'show')->name('variables.show')->can('view-variable-details');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -71,13 +72,13 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(FacultyController::class)->group(function () {
-    Route::get('faculties', 'index')->name('faculties.index');
-    Route::get('faculties/create', 'create')->name('faculties.create');
-    Route::post('faculties', 'store')->name('faculties.store');
-    Route::get('faculties/{faculty}', 'show')->name('faculties.show');
-    Route::get('faculties/{faculty}/edit', 'edit')->name('faculties.edit');
-    Route::put('faculties/{faculty}', 'update')->name('faculties.update');
-    Route::delete('faculties/{faculty}', 'destroy')->name('faculties.destroy');
+    Route::get('faculties', 'index')->name('faculties.index')->can('view-faculties');
+    Route::get('faculties/create', 'create')->name('faculties.create')->can('add-faculty');
+    Route::post('faculties', 'store')->name('faculties.store')->can('add-faculty');
+    Route::get('faculties/{faculty}', 'show')->name('faculties.show')->can('view-faculty-details');
+    Route::get('faculties/{faculty}/edit', 'edit')->name('faculties.edit')->can('edit-faculty');
+    Route::put('faculties/{faculty}', 'update')->name('faculties.update')->can('update-faculty');
+    Route::delete('faculties/{faculty}', 'destroy')->name('faculties.destroy')->can('delete-faculty');
 });
 
 
@@ -111,12 +112,64 @@ Route::controller(StudentController::class)->group(function () {
     Route::delete('students/{student}', 'destroy')->name('students.destroy');
 });
 
-Route::controller(StudentSectionController::class)->group(function () {
-    Route::get('student-sections', 'index')->name('student-sections.index');
-    Route::get('student-sections/create', 'create')->name('student-sections.create');
-    Route::post('student-sections', 'store')->name('student-sections.store');
-    Route::get('student-sections/{studentSection}', 'show')->name('student-sections.show');
-    Route::get('student-sections/{studentSection}/edit', 'edit')->name('student-sections.edit');
-    Route::put('student-sections/{studentSection}', 'update')->name('student-sections.update');
-    Route::delete('student-sections/{studentSection}', 'destroy')->name('student-sections.destroy');
+Route::get('/generate-permissions', function () {
+    $permissions = [
+        'view-dashboard',
+        'view-students',
+        'view-faculties',
+        'view-courses',
+        'view-sections',
+        'view-users',
+        'view-settings',
+        'view-roles',
+        'view-permissions',
+        'view-variables',
+        'add-student',
+        'edit-student',
+        'update-student',
+        'delete-student',
+        'view-student-details',
+        'add-course',
+        'edit-course',
+        'update-course',
+        'delete-course',
+        'view-course-details',
+        'add-section',
+        'edit-section',
+        'update-section',
+        'delete-section',
+        'view-section-details',
+        'add-faculty',
+        'edit-faculty',
+        'update-faculty',
+        'delete-faculty',
+        'view-faculty-details',
+        'add-user',
+        'edit-user',
+        'update-user',
+        'delete-user',
+        'view-user-details',
+        'add-role',
+        'edit-role',
+        'update-role',
+        'delete-role',
+        'view-role-details',
+        'add-permission',
+        'edit-permission',
+        'update-permission',
+        'delete-permisison',
+        'add-variable',
+        'edit-variable',
+        'update-variable',
+        'delete-variable',
+        'view-variable-details'
+    ];
+
+    foreach ($permissions as $permission) {
+        Permission::firstOrCreate(['name' => $permission]);
+    }
+    $superadminRole = Role::firstOrCreate(['name' => 'Superadmin']);
+
+    $superadminRole->syncPermissions($permissions);
+    return 'Permissions generated and assigned to Superadmin successfully!';
 });

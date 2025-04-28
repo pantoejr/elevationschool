@@ -50,6 +50,25 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
                         <div class="mb-4">
+                            <label for="course_cost" class="block text-sm font-medium text-gray-700">Cost</label>
+                            <input type="number" name="course_cost" value="{{ $section->course_cost }}" class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            @error('course_cost')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
+                            <select  name="currency" class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                <option value="USD" {{ old('currency', $section->currency) == 'USD' ? 'selected' : '' }}>USD</option>
+                                <option value="LRD" {{ old('currency', $section->currency) == 'LRD' ? 'selected' : '' }}>LRD</option>
+                            </select>
+                            @error('currency')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                        <div class="mb-4">
                             <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
                             <input type="date" name="start_date" value="{{ old('start_date', $section->start_date) }}" required
                                 class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
@@ -68,9 +87,9 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="mb-4">
-                            <label for="no_of_students" class="block text-sm font-medium text-gray-700">No of Students</label>
-                            <input type="number" name="no_of_students" value="{{ $section->no_of_students }}" class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
-                            @error('no_of_students')
+                            <label for="max_students" class="block text-sm font-medium text-gray-700">Max No. of Students</label>
+                            <input type="number" name="max_students" value="{{ $section->max_students }}" class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            @error('max_students')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>

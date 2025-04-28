@@ -22,11 +22,7 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
-                        Cost
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
-                        Currency
+                        Duration
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider">
@@ -45,10 +41,7 @@
                             {{ $course->name }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                            {{ $course->cost }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                            {{ strtoupper($course->currency) }}
+                            {{ ucfirst($course->duration) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                             <a href="{{ route('courses.edit', ['course' => $course]) }}"

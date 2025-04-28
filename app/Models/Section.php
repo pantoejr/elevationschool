@@ -13,7 +13,10 @@ class Section extends Model
         'start_date',
         'end_date',
         'status',
+        'max_students',
         'no_of_students',
+        'course_cost',
+        'currency',
         'created_by',
         'updated_by'
     ];
@@ -24,5 +27,9 @@ class Section extends Model
 
     public function faculty(){
         return $this->belongsTo(Faculty::class);
+    }
+
+    public function sectionInstallments(){
+        return $this->hasMany(SectionInstallment::class);
     }
 }

@@ -3,9 +3,9 @@
     <div class="max-w-6xl mx-auto bg-white rounded-md shadow-md overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-800">{{ $title }}</h2>
-            <a href="{{ route('sections.create') }}" class="px-2 py-1 rounded-sm bg-blue-600 text-white hover:bg-blue-700">
+            <button href="{{ route('sections.create') }}" class="px-2 py-1 rounded-sm bg-blue-600 text-white hover:bg-blue-700">
                 <i class="fas fa-plus-circle"></i>
-            </a>
+            </button>
         </div>
 
         <div class="overflow-x-auto">
@@ -27,7 +27,7 @@
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
-                            No. Of Students
+                            Max Students
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
@@ -59,7 +59,7 @@
                                 {{ $section->course->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                {{ $section->no_of_students }}
+                                {{ $section->max_students }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span
@@ -96,4 +96,5 @@
             </table>
         </div>
     </div>
+</div>
 @endsection

@@ -34,20 +34,10 @@
 
                 </div>
                 <div class="mb-4">
-                    <label for="cost" class="block text-sm font-medium text-gray-700">Cost</label>
-                    <input type="number" name="cost" id="cost" value="{{ old('cost', $course->cost) }}" disabled
+                    <label for="description" class="block text-sm font-medium text-gray-700">Course Description</label>
+                    <input type="text" name="description" id="description" value="{{ old('description', $course->description) }}" disabled
                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
-                </div>
-                <div class="mb-4">
-                    <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
-                    <select name="currency" id="currency" disabled
-                        class="mt-1 block w-full border-gray-300 p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
-                        <option value="">Select currency</option>
-                        <option value="USD" {{ old('currency', $course->currency) == 'USD' ? 'selected' : '' }}>USD
-                        </option>
-                        <option value="LRD" {{ old('currency', $course->currency) == 'LRD' ? 'selected' : '' }}>LRD
-                        </option>
-                    </select>
+                    
                 </div>
                 <div class="flex justify-between pt-6 border-gray-200">
                     <a href="{{ route('courses.index') }}"

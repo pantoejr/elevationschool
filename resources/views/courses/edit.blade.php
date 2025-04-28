@@ -21,6 +21,16 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Course Description</label>
+                        <input type="text" name="description" id="description" value="{{ old('description', $course->description) }}" required
+                            class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200"
+                            placeholder="Enter course name">
+                        @error('description')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
                         <label for="duration" class="block text-sm font-medium text-gray-700">Duration</label>
                         <select name="duration" id="duration"
                             class="mt-1 block w-full border-gray-300 p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
@@ -35,30 +45,7 @@
                         @error('duration')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="cost" class="block text-sm font-medium text-gray-700">Cost</label>
-                        <input type="number" name="cost" id="cost" value="{{ old('cost', $course->cost) }}" required
-                            class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200"
-                            placeholder="Enter course cost">
-                        @error('cost')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
-                        <select name="currency" id="currency"
-                            class="mt-1 block w-full border-gray-300 p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
-                            <option value="">Select currency</option>
-                            <option value="USD" {{ old('currency', $course->currency) == 'USD' ? 'selected' : '' }}>USD</option>
-                            <option value="LRD" {{ old('currency', $course->currency) == 'LRD' ? 'selected' : '' }}>LRD</option>
-                        </select>
-                        @error('currency')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    </div>                  
 
                     <div class="flex justify-between pt-6 border-gray-200">
                         <a href="{{ route('courses.index') }}"
