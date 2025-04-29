@@ -91,7 +91,7 @@
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm ">
-            <form action="#" method="POST">
+            <form action="{{ route('installments.create', ['section' => $model]) }}" method="POST">
                 @csrf
                 <div class="flex items-center justify-between p-4 md:p-5  rounded-t  border-gray-200">
                     <h3 class="text-xl font-semibold text-gray-900">
