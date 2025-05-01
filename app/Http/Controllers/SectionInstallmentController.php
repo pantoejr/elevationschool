@@ -73,7 +73,7 @@ class SectionInstallmentController extends Controller
         return response()->json($sectionInstallment);
     }
 
-    public function update(Request $request, SectionInstallment $installment, Section $section)
+    public function update(Request $request,  Section $section, SectionInstallment $installment)
     {
         $request->validate([
             'name' => 'required|string',
@@ -118,7 +118,7 @@ class SectionInstallmentController extends Controller
     }
 
 
-    public function destroy(SectionInstallment $installment, Section $section)
+    public function destroy(Section $section, SectionInstallment $installment)
     {
         try {
             $installment->delete();

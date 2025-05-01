@@ -3,7 +3,7 @@
         <!-- Header -->
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-800">Section Installment</h2>
-            <button data-modal-target="default-modal" data-modal-toggle="default-modal"
+            <button data-modal-target="add-installment-modal" data-modal-toggle="add-installment-modal"
                 class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
                 <i class="fas fa-plus-circle"></i>
@@ -56,25 +56,123 @@
                                 {{ $installment->currency }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
-                                {{-- <a href="{{ route('sections.edit', ['section' => $section]) }}"
-                                    class="text-yellow-600 hover:text-yellow-900 mr-4">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="{{ route('sections.show', ['section' => $section]) }}"
-                                    class="text-blue-600 hover:text-blue-900 mr-4">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <form action="{{ route('sections.destroy', ['section' => $section]) }}"
-                                    style="display: inline-block" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="text-red-600 hover:text-red-900 delete-btn">
-                                        <i class="fas fa-trash-alt"></i>
+                                @can('edit-installment')
+                                    <button type="button" data-modal-target="edit-installment-modal-{{ $installment->id }}"
+                                        data-modal-toggle="edit-installment-modal-{{ $installment->id }}"
+                                        class="text-yellow-600 hover:text-yellow-900 mr-4">
+                                        <i class="fas fa-edit"></i>
                                     </button>
-                                </form> --}}
-
+                                @endcan
+                                @can('delete-installment')
+                                    <form
+                                        action="{{ route('installments.destroy', ['section' => $model, 'installment' => $installment,]) }}"
+                                        style="display: inline-block" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="text-red-600 hover:text-red-900 delete-btn">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
+
+                        {{-- Edit Installment Modal --}}
+                        <div id="edit-installment-modal-{{ $installment->id }}" tabindex="-1" aria-hidden="true"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow-sm">
+                                    <form
+                                        action="{{ route('installments.update', ['installment' => $installment, 'section' => $model]) }}"
+                                        method="POST">
+                                        @method('PUT')
+                                        @csrf
+                                        <div
+                                            class="flex items-center justify-between p-4 md:p-5 rounded-t border-gray-200">
+                                            <h3 class="text-xl font-semibold text-gray-900">
+                                                Edit Section Installment
+                                            </h3>
+                                            <button type="button"
+                                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                data-modal-hide="edit-installment-modal-{{ $installment->id }}">
+                                                <svg class="w-3 h-3" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <div class="p-4 md:p-5 space-y-4">
+                                            <div class="grid grid-cols-1">
+                                                <input type="hidden" name="section_id" value="{{ $model->id }}">
+                                                <div class="mb-4">
+                                                    <label for="name-{{ $installment->id }}"
+                                                        class="block text-sm font-medium text-gray-700">Name</label>
+                                                    <input type="text" name="name"
+                                                        id="name-{{ $installment->id }}"
+                                                        value="{{ $installment->name }}" required
+                                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="amount-{{ $installment->id }}"
+                                                        class="block text-sm font-medium text-gray-700">Amount</label>
+                                                    <input type="number" name="amount"
+                                                        id="amount-{{ $installment->id }}"
+                                                        value="{{ $installment->amount }}" required
+                                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="currency-{{ $installment->id }}"
+                                                        class="block text-sm font-medium text-gray-700">Currency</label>
+                                                    <select name="currency" id="currency-{{ $installment->id }}"
+                                                        required
+                                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                        <option value="USD"
+                                                            {{ $installment->currency == 'USD' ? 'selected' : '' }}>USD
+                                                        </option>
+                                                        <option value="LRD"
+                                                            {{ $installment->currency == 'LRD' ? 'selected' : '' }}>LRD
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                                                <div class="mb-4">
+                                                    <label for="start_date-{{ $installment->id }}"
+                                                        class="block text-sm font-medium text-gray-700">Start
+                                                        Date</label>
+                                                    <input type="date" name="start_date"
+                                                        id="start_date-{{ $installment->id }}"
+                                                        value="{{ $installment->start_date }}" required
+                                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="end_date-{{ $installment->id }}"
+                                                        class="block text-sm font-medium text-gray-700">End
+                                                        Date</label>
+                                                    <input type="date" name="end_date"
+                                                        id="end_date-{{ $installment->id }}"
+                                                        value="{{ $installment->end_date }}" required
+                                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal footer -->
+                                        <div class="flex items-center p-4 md:p-5 rounded-b">
+                                            <button type="submit"
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
+                                            <button data-modal-hide="edit-installment-modal-{{ $installment->id }}"
+                                                type="button"
+                                                class="py-2.5 px-5 ms-3 text-sm font-medium focus:outline-none bg-red-600 rounded-lg border border-gray-200 hover:bg-red-700 text-white">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
@@ -85,8 +183,8 @@
 
 
 
-<!-- Main modal -->
-<div id="default-modal" tabindex="-1" aria-hidden="true"
+{{-- Add Installment Modal --}}
+<div id="add-installment-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
@@ -99,11 +197,11 @@
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-hide="default-modal">
+                        data-modal-hide="add-installment-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>
@@ -129,7 +227,8 @@
                         </div>
                         <div class="mb-4">
                             <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
-                            <select  name="currency" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <select name="currency" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                 <option value="USD">USD</option>
                                 <option value="LRD">LRD</option>
                             </select>
@@ -141,14 +240,16 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
                         <div class="mb-4">
                             <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
-                            <input type="date" name="start_date" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <input type="date" name="start_date" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                             @error('start_date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mb-4">
                             <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
-                            <input type="date" name="end_date" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <input type="date" name="end_date" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                             @error('end_date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -157,12 +258,13 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center p-4 md:p-5 rounded-b ">
-                    <button  type="submit"
+                    <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
-                    <button data-modal-hide="default-modal" type="button"
+                    <button data-modal-hide="add-installment-modal" type="button"
                         class="py-2.5 px-5 ms-3 text-sm font-medium  focus:outline-none bg-red-600 rounded-lg border border-gray-200 hover:bg-red-700 text-white">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+{{-- End of Add Installment Modal --}}

@@ -60,8 +60,8 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
-                            <label for="dob" class="block text-md font-medium text-gray-700 mb-1">Date of Birth</label>
-                            <input type="date" id="dob" name="dob" required
+                            <label for="date_of_birth" class="block text-md font-medium text-gray-700 mb-1">Date of Birth</label>
+                            <input type="date" id="date_of_birth" name="date_of_birth" required
                                 class="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
                             @error('dob')
                                 <p class="text-red-500">{{ $message }}</p>
@@ -163,11 +163,6 @@
                             <input type="text" id="mobile_phone" name="mobile_phone" required
                                 class="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
                         </div>
-                        <div>
-                            <label for="email" class="block text-md font-medium text-gray-700 mb-1">Email</label>
-                            <input type="text" id="email" name="email" required
-                                class="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
-                        </div>
                     </div>
                     <div class="space-y-4">
                         <h2 class="text-lg font-semibold text-blue-500 border-b border-gray-300 pb-2">Parents Information
@@ -203,6 +198,9 @@
                                 <input type="text" id="emergency_contact_number" name="emergency_contact_number"
                                     required
                                     class="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+                                @error('emergency_contact_number')
+                                    <p class="text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -220,25 +218,32 @@
                                     <option value="Advanced">Advanced</option>
                                     <option value="Professional">Professional</option>
                                 </select>
+                                @error('education_status')
+                                    <p class="text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
                                 <label for="education_status"
                                     class="block text-md font-medium text-gray-700 mb-1">Education Status</label>
                                 <input type="text" id="education_status" name="education_status" required
                                     class="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+                                @error('education_status')
+                                    <p class="text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label for="section_id"
-                                    class="block text-md font-medium text-gray-700 mb-1">Course Applying For</label>
+                                <label for="section_id" class="block text-md font-medium text-gray-700 mb-1">Course
+                                    Applying For</label>
                                 <select type="text" id="section_id" name="section_id" required
                                     class="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
                                     <option value="0">Select Course</option>
                                     @foreach ($sections as $section)
-                                        <option value="{{ $section->id }}">{{ $section->name . ' ( ' . $section->course->name . ' ) ' }}</option>
+                                        <option value="{{ $section->id }}">
+                                            {{ $section->name . ' ( ' . $section->course->name . ' ) ' }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -253,6 +258,34 @@
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2">
+                            <label for="is_new" class="flex items-center cursor-pointer">
+                                <!-- toggle -->
+                                <div class="relative">
+                                    <input type="checkbox" id="is_new" name="is_new" class="sr-only"
+                                        @if (old('is_new', $model->is_new ?? true)) checked @endif>
+                                    <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                </div>
+                                <!-- label -->
+                                <div class="ml-3 text-gray-700 font-medium">
+                                    Is New
+                                </div>
+                            </label>
+                            <style>
+                                input:checked~.dot {
+                                    transform: translateX(100%);
+                                    background-color: #ffffff;
+                                }
+
+                                input:checked~.block {
+                                    background-color: #2161f5;
+                                    /* You can change this to your primary color */
+                                }
+                            </style>
                         </div>
                     </div>
                 </div>
@@ -280,7 +313,7 @@
                     </a>
                     <button type="submit"
                         class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition">
-                        <i class="fas fa-save mr-2"></i> Save Faculty
+                        <i class="fas fa-save mr-2"></i> Save Student
                     </button>
                 </div>
             </form>
