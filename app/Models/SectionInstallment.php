@@ -9,6 +9,7 @@ class SectionInstallment extends Model
     protected $fillable = [
         'name',
         'section_id',
+        'installment_id',
         'amount',
         'currency',
         'start_date',
@@ -19,5 +20,9 @@ class SectionInstallment extends Model
 
     public function section(){
         return $this->belongsTo(Section::class);
+    }
+
+    public function installment(){
+        return $this->belongsTo(Installment::class);
     }
 }

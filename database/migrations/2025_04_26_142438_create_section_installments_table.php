@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('section_id')->constrained()->onDelete('cascade');
+            $table->foreignId('installment_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 8, 2);
             $table->enum('currency', ['USD', 'LRD']);
             $table->date('start_date');
