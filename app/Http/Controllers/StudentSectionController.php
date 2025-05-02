@@ -45,10 +45,45 @@ class StudentSectionController extends Controller
         }
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $studentSection = StudentSection::findOrFail($id);
         return response()->json([
             'studentSection' => $studentSection,
         ]);
+    }
+
+    public function update(Request $request, Student $student, StudentSection $section)
+    {
+        try {
+            $request->validate([
+                'student_id' => 'required|exists:students,id',
+                'section_id' => 'required|exists:sections,id',
+                'status' => 'required|in:active,inactive',
+            ]);
+
+            $section->update([
+                'student_id' => $student->id,
+                'section_id' => $request->section_id,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->name,
+            ]);
+
+            return to_route('students.show',['student' => $student])
+            ->with('success','Student section updated successfully')
+            ->with('flag','success');
+
+        } catch (Exception $ex) {
+            return back()
+            ->with('success','Error: ' . $ex->getMessage())
+            ->with('flag','error');
+        }
+    }
+
+    public function destroy(Student $student, StudentSection $section){
+        $section->delete();
+        return to_route('students.show',['student' => $student])
+        ->with('success', 'Student section removed successfully')
+        ->with('flag','success');
     }
 }

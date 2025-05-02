@@ -181,9 +181,7 @@
                                         @php
                                             $statusColors = [
                                                 'active' => 'bg-green-100 text-green-800',
-                                                'completed' => 'bg-blue-100 text-blue-800',
-                                                'upcoming' => 'bg-yellow-100 text-yellow-800',
-                                                'cancelled' => 'bg-red-100 text-red-800',
+                                                'inactive' => 'bg-red-100 text-red-800',
                                             ];
                                             $color =
                                                 $statusColors[strtolower($section->status)] ??
@@ -205,7 +203,6 @@
         <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">Upcoming Installments</h3>
-                <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -223,9 +220,6 @@
                             <th scope="col"
                                 class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due
                                 Date</th>
-                            <th scope="col"
-                                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
                             <th scope="col"
                                 class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Action</th>
@@ -259,22 +253,6 @@
                                             {{ abs($daysLeft) }} days overdue
                                         @endif
                                     </div>
-                                </td>
-                                <td class="px-4 py-3 whitespace-nowrap">
-                                    @php
-                                        $statusColors = [
-                                            'paid' => 'bg-green-100 text-green-800',
-                                            'unpaid' => 'bg-red-100 text-red-800',
-                                            'partial' => 'bg-yellow-100 text-yellow-800',
-                                            'overdue' => 'bg-purple-100 text-purple-800',
-                                        ];
-                                        $color =
-                                            $statusColors[strtolower($installment->status ?? 'unpaid')] ??
-                                            'bg-gray-100 text-gray-800';
-                                    @endphp
-                                    <span class="px-2 py-1 text-xs font-medium rounded-full {{ $color }}">
-                                        {{ ucfirst($installment->status ?? 'Unpaid') }}
-                                    </span>
                                 </td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
                                     <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>

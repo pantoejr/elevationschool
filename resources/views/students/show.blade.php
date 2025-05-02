@@ -13,7 +13,13 @@
                 'title' => 'Sections',
                 'view' => 'students.partials.sections',
                 'icons' => 'clock',
-            ]
+            ],
+            [
+                'id' => 'section3',
+                'title' => 'Documents',
+                'view' => 'students.partials.attachments',
+                'icons' => 'file',
+            ],
         ];
     @endphp
 

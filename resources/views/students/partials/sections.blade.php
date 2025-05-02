@@ -41,8 +41,14 @@
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
                                 {{ $studentSection->section->name }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                {{ $studentSection->status }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                @if ($studentSection->status === 'active')
+                                    <span
+                                        class="bg-green-200  p-1 rounded-lg text-green-800">{{ ucfirst($studentSection->status) }}</span>
+                                @else
+                                    <span
+                                        class="bg-red-200  p-1 rounded-lg text-red-800">{{ ucfirst($studentSection->status) }}</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                                 @can('edit-installment')
@@ -100,6 +106,32 @@
                                             <div class="grid grid-cols-1">
                                                 <input type="hidden" name="student_id" value="{{ $model->id }}">
                                                 <div class="mb-4">
+                                                    <label for="section_id"
+                                                        class="block text-sm font-medium text-gray-700">Section</label>
+                                                    <select name="section_id" id="section_id"
+                                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                        <option value="{{ $studentSection->section->id }}">
+                                                            {{ $studentSection->section->name }}</option>
+                                                    </select>
+                                                    @error('section_id')
+                                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="status"
+                                                        class="block text-sm font-medium text-gray-700">Status</label>
+                                                    <select name="status" required
+                                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                        <option value="active"
+                                                            {{ old('status', $studentSection->status) == 'active' ? 'selected' : '' }}>
+                                                            Active</option>
+                                                        <option value="inactive"
+                                                            {{ old('status', $studentSection->status) == 'inactive' ? 'selected' : '' }}>
+                                                            Inactive</option>
+                                                    </select>
+                                                    @error('status')
+                                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <!-- Modal footer -->
@@ -140,8 +172,8 @@
                         data-modal-hide="add-student-section-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>

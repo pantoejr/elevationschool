@@ -120,6 +120,9 @@ Route::controller(StudentController::class)->group(function () {
     Route::get('students/{student}/edit', 'edit')->name('students.edit');
     Route::put('students/{student}', 'update')->name('students.update');
     Route::delete('students/{student}', 'destroy')->name('students.destroy');
+    Route::post('students/attachments/store','storeStudentAttachment')->name('storeStudentAttachment');
+    Route::get('students/attachment/{attachment}','showStudentAttachment')->name('showStudentAttachment');
+    Route::delete('students/attachment/{attachment}','destroyStudentAttachment')->name('deleteStudentAttachment');
 });
 
 Route::prefix('students/{student}')->group(function () {
@@ -192,6 +195,9 @@ Route::get('/generate-permissions', function () {
         'edit-student-section',
         'update-student-section',
         'delete-student-section',
+        'add-student-attachment',
+        'view-student-attachment',
+        'delete-student-attachment',
     ];
 
     foreach ($permissions as $permission) {
