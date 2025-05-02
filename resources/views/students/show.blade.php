@@ -24,6 +24,6 @@
     @endphp
 
     @can('view-section-details')
-        <x-section-navigation :sections="$sections" :model="$student" :classSections="$classSections" />
+        <x-section-navigation :sections="$sections" :model="$student" :classSections="$classSections"/>
     @endcan
 @endsection

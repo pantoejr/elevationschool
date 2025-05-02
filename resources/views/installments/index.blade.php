@@ -27,17 +27,17 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @if ($roles->isEmpty())
+                    @if ($installments->isEmpty())
                         <p class="text-gray-700">No record found</p>
                     @else
-                        @foreach ($roles as $role)
+                        @foreach ($installments as $installment)
                             <tr class="hover:bg-gray-50 transition duration-150">
                                 <td class="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                                     {{ $loop->iteration }}
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                    {{ $role->name }}
+                                    {{ $installment->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                                     <a href="{{ route('roles.edit', ['role' => $role]) }}"

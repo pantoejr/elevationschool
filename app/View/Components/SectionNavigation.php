@@ -12,11 +12,13 @@ class SectionNavigation extends Component
     public $model;
     public $sections;
     public $classSections;
-    public function __construct($sections,$model,$classSections = null)
+    public $installments;
+    public function __construct($sections,$model,$classSections = null, $installments = null)
     {
         $this->sections = $sections;
         $this->model = $model;
         $this->classSections = $classSections;
+        $this->installments = $installments;
     }
 
     /**

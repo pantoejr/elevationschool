@@ -25,8 +25,8 @@ class SectionInstallmentController extends Controller
     public function store(Request $request, Section $section)
     {
         $request->validate([
-            'name' => 'required|string',
             'section_id' => 'required|exists:sections,id',
+            'installment_id' => 'required|exists:installments,id',
             'amount' => 'required|numeric',
             'currency' => 'in:USD,LRD',
             'start_date' => 'date',
@@ -46,8 +46,8 @@ class SectionInstallmentController extends Controller
         try {
 
             SectionInstallment::create([
-                'name' => $request->name,
                 'section_id' => $request->section_id,
+                'installment_id' => $request->installment_id,
                 'amount' => $request->amount,
                 'currency' => $request->currency,
                 'start_date' => $request->start_date,
@@ -76,8 +76,8 @@ class SectionInstallmentController extends Controller
     public function update(Request $request,  Section $section, SectionInstallment $installment)
     {
         $request->validate([
-            'name' => 'required|string',
             'section_id' => 'required|exists:sections,id',
+            'installment_id' => 'required|exists:installments,id',
             'amount' => 'required|numeric',
             'currency' => 'in:USD,LRD',
             'start_date' => 'date',
@@ -98,8 +98,8 @@ class SectionInstallmentController extends Controller
         try {
 
             $installment->update([
-                'name' => $request->name,
                 'section_id' => $section->id,
+                'installment_id' => $request->installment_id,
                 'amount' => $request->amount,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,

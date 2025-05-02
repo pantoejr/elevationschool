@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Routing\Controller;
 
 class UserController extends Controller
-{
+{   
+    public function __construct() {
+        $this->middleware(['auth']);
+    }
+
     public function index()
     {
         $users = User::all();

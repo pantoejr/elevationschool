@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Faculty;
+use App\Models\Installment;
 use App\Models\Section;
 use App\Models\Student;
 use Exception;
@@ -126,9 +127,11 @@ class SectionController extends Controller
 
     public function show(Section $section)
     {
+        $installments = Installment::all();
         return view('sections.show', [
             'title' => 'Section Details',
             'section' => $section,
+            'installments' => $installments,
         ]);
     }
 

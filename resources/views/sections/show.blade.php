@@ -18,6 +18,6 @@
     @endphp
 
     @can('view-section-details')
-        <x-section-navigation :sections="$sections" :model="$section" />
+        <x-section-navigation :sections="$sections" :model="$section" :installments="$installments" />
     @endcan
 @endsection

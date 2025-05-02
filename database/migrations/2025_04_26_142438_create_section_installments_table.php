@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('section_installments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('section_id')->constrained()->onDelete('cascade');
             $table->foreignId('installment_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 8, 2);

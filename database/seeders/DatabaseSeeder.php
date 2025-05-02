@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $newUser = User::factory()->create([
             'name' => 'Test User',
             'email' => 'pantoejr@gmail.com',
             'password' => bcrypt('P@55w0rd'),
         ]);
 
-        $user = User::find(1);
-        $user->assignRole('Superadmin');
+        //$user = User::find(1);
+        $newUser->assignRole('Superadmin');
     }
 }

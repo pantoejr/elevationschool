@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Installment;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\StudentSection;
@@ -230,7 +231,7 @@ class StudentController extends Controller
         return view('students.show', [
             'student' => $student,
             'title' => 'Student Details',
-            'classSections' => $sections
+            'classSections' => $sections,
         ]);
     }
 

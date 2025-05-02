@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionController;
@@ -134,10 +136,29 @@ Route::prefix('students/{student}')->group(function () {
     });
 });
 
+Route::controller(InstallmentController::class)->group(function () {
+    Route::get('installments', 'index')->name('installments.index')->can('view-installments');
+    Route::get('installments/create', 'create')->name('installments.create')->can('add-installment');
+    Route::post('installments', 'store')->name('installments.store')->can('add-installment');
+    Route::get('installments/{installment}', 'show')->name('installments.show')->can('view-installment-details');
+    Route::get('installments/{installment}/edit', 'edit')->name('installments.edit')->can('edit-installment');
+    Route::put('installments/{installment}', 'update')->name('installments.update')->can('update-installment');
+    Route::delete('installments/{installment}', 'destroy')->name('installments.destroy')->can('delete-installment');
+});
+
+Route::controller(AttendanceController::class)->group(function(){
+    Route::get('attendances', 'index')->name('attendances.index')->can('view-attendances');
+    Route::get('attendances/create', 'create')->name('attendances.create')->can('add-attendance');
+    Route::post('attendances', 'store')->name('attendances.store')->can('add-attendance');
+    Route::get('attendances/{attendance}', 'show')->name('attendances.show')->can('view-attendance-details');
+    Route::get('attendances/{attendance}/edit', 'edit')->name('attendances.edit')->can('edit-attendance');
+    Route::put('attendances/{attendance}', 'update')->name('attendances.update')->can('update-attendance');
+    Route::delete('attendances/{attendance}', 'destroy')->name('attendances.destroy')->can('delete-attendance');
+});
+
 Route::get('/generate-permissions', function () {
     $permissions = [
         'view-dashboard',
-        'view-students',
         'view-faculties',
         'view-courses',
         'view-sections',
@@ -198,6 +219,11 @@ Route::get('/generate-permissions', function () {
         'add-student-attachment',
         'view-student-attachment',
         'delete-student-attachment',
+        'view-attendances',
+        'add-attendance',
+        'edit-attendance',
+        'update-attendance',
+        'delete-attendance',
     ];
 
     foreach ($permissions as $permission) {

@@ -20,7 +20,7 @@
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
-                            Name
+                            Installment
                         </th>
 
                         <th scope="col"
@@ -40,32 +40,32 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
 
-                    @foreach ($model->sectionInstallments as $installment)
+                    @foreach ($model->sectionInstallments as $sectionInstallment)
                         <tr class="hover:bg-gray-50 transition duration-150">
                             <td class="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                                 {{ $loop->iteration }}
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                {{ $installment->name }}
+                                {{ $sectionInstallment->installment->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                {{ $installment->amount }}
+                                {{ $sectionInstallment->amount }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                {{ $installment->currency }}
+                                {{ $sectionInstallment->currency }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                                 @can('edit-installment')
-                                    <button type="button" data-modal-target="edit-installment-modal-{{ $installment->id }}"
-                                        data-modal-toggle="edit-installment-modal-{{ $installment->id }}"
+                                    <button type="button" data-modal-target="edit-installment-modal-{{ $sectionInstallment->id }}"
+                                        data-modal-toggle="edit-installment-modal-{{ $sectionInstallment->id }}"
                                         class="text-yellow-600 hover:text-yellow-900 mr-4">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                 @endcan
                                 @can('delete-installment')
                                     <form
-                                        action="{{ route('installments.destroy', ['section' => $model, 'installment' => $installment,]) }}"
+                                        action="{{ route('installments.destroy', ['section' => $model, 'installment' => $sectionInstallment]) }}"
                                         style="display: inline-block" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -78,13 +78,13 @@
                         </tr>
 
                         {{-- Edit Installment Modal --}}
-                        <div id="edit-installment-modal-{{ $installment->id }}" tabindex="-1" aria-hidden="true"
+                        <div id="edit-installment-modal-{{ $sectionInstallment->id }}" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-2xl max-h-full">
                                 <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg shadow-sm">
                                     <form
-                                        action="{{ route('installments.update', ['installment' => $installment, 'section' => $model]) }}"
+                                        action="{{ route('installments.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
                                         method="POST">
                                         @method('PUT')
                                         @csrf
@@ -95,7 +95,7 @@
                                             </h3>
                                             <button type="button"
                                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                                data-modal-hide="edit-installment-modal-{{ $installment->id }}">
+                                                data-modal-hide="edit-installment-modal-{{ $sectionInstallment->id }}">
                                                 <svg class="w-3 h-3" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 14 14">
@@ -110,53 +110,53 @@
                                             <div class="grid grid-cols-1">
                                                 <input type="hidden" name="section_id" value="{{ $model->id }}">
                                                 <div class="mb-4">
-                                                    <label for="name-{{ $installment->id }}"
+                                                    <label for="name-{{ $sectionInstallment->id }}"
                                                         class="block text-sm font-medium text-gray-700">Name</label>
                                                     <input type="text" name="name"
-                                                        id="name-{{ $installment->id }}"
-                                                        value="{{ $installment->name }}" required
+                                                        id="name-{{ $sectionInstallment->id }}"
+                                                        value="{{ $sectionInstallment->name }}" required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                 </div>
                                                 <div class="mb-4">
-                                                    <label for="amount-{{ $installment->id }}"
+                                                    <label for="amount-{{ $sectionInstallment->id }}"
                                                         class="block text-sm font-medium text-gray-700">Amount</label>
                                                     <input type="number" name="amount"
-                                                        id="amount-{{ $installment->id }}"
-                                                        value="{{ $installment->amount }}" required
+                                                        id="amount-{{ $sectionInstallment->id }}"
+                                                        value="{{ $sectionInstallment->amount }}" required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                 </div>
                                                 <div class="mb-4">
-                                                    <label for="currency-{{ $installment->id }}"
+                                                    <label for="currency-{{ $sectionInstallment->id }}"
                                                         class="block text-sm font-medium text-gray-700">Currency</label>
-                                                    <select name="currency" id="currency-{{ $installment->id }}"
+                                                    <select name="currency" id="currency-{{ $sectionInstallment->id }}"
                                                         required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                         <option value="USD"
-                                                            {{ $installment->currency == 'USD' ? 'selected' : '' }}>USD
+                                                            {{ $sectionInstallment->currency == 'USD' ? 'selected' : '' }}>USD
                                                         </option>
                                                         <option value="LRD"
-                                                            {{ $installment->currency == 'LRD' ? 'selected' : '' }}>LRD
+                                                            {{ $sectionInstallment->currency == 'LRD' ? 'selected' : '' }}>LRD
                                                         </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
                                                 <div class="mb-4">
-                                                    <label for="start_date-{{ $installment->id }}"
+                                                    <label for="start_date-{{ $sectionInstallment->id }}"
                                                         class="block text-sm font-medium text-gray-700">Start
                                                         Date</label>
                                                     <input type="date" name="start_date"
-                                                        id="start_date-{{ $installment->id }}"
-                                                        value="{{ $installment->start_date }}" required
+                                                        id="start_date-{{ $sectionInstallment->id }}"
+                                                        value="{{ $sectionInstallment->start_date }}" required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                 </div>
                                                 <div class="mb-4">
-                                                    <label for="end_date-{{ $installment->id }}"
+                                                    <label for="end_date-{{ $sectionInstallment->id }}"
                                                         class="block text-sm font-medium text-gray-700">End
                                                         Date</label>
                                                     <input type="date" name="end_date"
-                                                        id="end_date-{{ $installment->id }}"
-                                                        value="{{ $installment->end_date }}" required
+                                                        id="end_date-{{ $sectionInstallment->id }}"
+                                                        value="{{ $sectionInstallment->end_date }}" required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                 </div>
                                             </div>
@@ -165,7 +165,7 @@
                                         <div class="flex items-center p-4 md:p-5 rounded-b">
                                             <button type="submit"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
-                                            <button data-modal-hide="edit-installment-modal-{{ $installment->id }}"
+                                            <button data-modal-hide="edit-installment-modal-{{ $sectionInstallment->id }}"
                                                 type="button"
                                                 class="py-2.5 px-5 ms-3 text-sm font-medium focus:outline-none bg-red-600 rounded-lg border border-gray-200 hover:bg-red-700 text-white">Cancel</button>
                                         </div>
@@ -210,10 +210,15 @@
                     <div class="grid grid-cols-1">
                         <input type="hidden" name="section_id" value="{{ $model->id }}">
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                            <input type="text" name="name" id="name" required
+                            <label for="installment_id"
+                                class="block text-sm font-medium text-gray-700">Installment</label>
+                            <select name="installment_id" required
                                 class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
-                            @error('name')
+                                @foreach ($installments as $installment)
+                                    <option value="{{ $installment->id }}">{{ $installment->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('installment_id')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
