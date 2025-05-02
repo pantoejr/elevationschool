@@ -20,6 +20,8 @@ class Student extends Model
         'nationality',
         'official_language',
         'permanent_address_town',
+        'permanent_address_city',
+        'permanent_address_country',
         'mobile_phone',
         'email',
         'father_name',
@@ -42,5 +44,9 @@ class Student extends Model
     public function attendances()
     {
         return $this->hasMany(Attendance::class);
+    }
+
+    public function studentSections(){
+        return $this->hasMany(StudentSection::class);
     }
 }

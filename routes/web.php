@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\SectionInstallmentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentSectionController;
 use App\Http\Controllers\SystemVariableController;
@@ -102,6 +103,15 @@ Route::controller(SectionController::class)->group(function () {
     Route::delete('sections/{section}', 'destroy')->name('sections.destroy');
 });
 
+Route::prefix('sections/{section}')->group(function () {
+    Route::controller(SectionInstallmentController::class)->group(function () {
+        Route::post('installments/create', 'store')->name('installments.create')->can('add-installment');
+        Route::get('installments/{installment}/edit', 'edit')->name('installments.edit')->can('edit-installment');
+        Route::put('installments/{installment}', 'update')->name('installments.update')->can('update-installment');
+        Route::delete('installment/{installment}', 'destroy')->name('installments.destroy')->can('delete-installment');
+    });
+});
+
 Route::controller(StudentController::class)->group(function () {
     Route::get('students', 'index')->name('students.index');
     Route::get('students/create', 'create')->name('students.create');
@@ -110,6 +120,18 @@ Route::controller(StudentController::class)->group(function () {
     Route::get('students/{student}/edit', 'edit')->name('students.edit');
     Route::put('students/{student}', 'update')->name('students.update');
     Route::delete('students/{student}', 'destroy')->name('students.destroy');
+    Route::post('students/attachments/store','storeStudentAttachment')->name('storeStudentAttachment');
+    Route::get('students/attachment/{attachment}','showStudentAttachment')->name('showStudentAttachment');
+    Route::delete('students/attachment/{attachment}','destroyStudentAttachment')->name('deleteStudentAttachment');
+});
+
+Route::prefix('students/{student}')->group(function () {
+    Route::controller(StudentSectionController::class)->group(function () {
+        Route::post('sections', 'store')->name('studentSections.store')->can('add-student-section');
+        Route::get('sections/{section}/edit', 'edit')->name('studentSections.edit')->can('edit-student-section');
+        Route::put('sections/{section}', 'update')->name('studentSections.update')->can('update-student-section');
+        Route::delete('sections/{section}', 'destroy')->name('studentSections.destroy')->can('delete-student-section');
+    });
 });
 
 Route::get('/generate-permissions', function () {
@@ -162,7 +184,20 @@ Route::get('/generate-permissions', function () {
         'edit-variable',
         'update-variable',
         'delete-variable',
-        'view-variable-details'
+        'view-variable-details',
+        'view-installments',
+        'add-installment',
+        'edit-installment',
+        'update-installment',
+        'delete-installment',
+        'view-student-sections',
+        'add-student-section',
+        'edit-student-section',
+        'update-student-section',
+        'delete-student-section',
+        'add-student-attachment',
+        'view-student-attachment',
+        'delete-student-attachment',
     ];
 
     foreach ($permissions as $permission) {

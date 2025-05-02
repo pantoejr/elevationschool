@@ -10,7 +10,7 @@
             <!-- Form -->
             <form action="{{ route('faculties.update', ['faculty' => $faculty ]) }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-6">
                 @csrf
-
+                @method('PUT')
                 <!-- Photo Upload Section -->
                 <div class="flex flex-col items-center space-y-4">
                     <div class="relative">

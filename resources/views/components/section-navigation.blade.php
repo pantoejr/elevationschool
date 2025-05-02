@@ -1,64 +1,5 @@
-{{-- <div class="mb-6">
-    <!-- Section Navigation Tabs -->
-    <div class="flex flex-col sm:flex-row mb-4 rounded-lg overflow-hidden shadow-sm">
-        @foreach ($sections as $section)
-            <button type="button" 
-                class="flex items-center justify-center sm:justify-start px-4 py-3 font-medium text-sm transition-all duration-200 ease-in-out
-                       {{ $loop->first ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200' }}
-                       section-btn"
-                id="{{ $section['id'] }}-btn" 
-                data-target="#{{ $section['id'] }}">
-                <i class="fas fa-{{ $section['icons'] }} mr-0 sm:mr-2"></i>
-                <span class="hidden sm:inline">{{ $section['title'] }}</span>
-            </button>
-        @endforeach
-    </div>
-
-    <!-- Section Content -->
-    <div class="bg-white rounded-lg shadow p-4">
-        @foreach ($sections as $section)
-            <div id="{{ $section['id'] }}" class="section-content {{ $loop->first ? '' : 'hidden' }}">
-                @include($section['view'], ['model' => $model])
-            </div>
-        @endforeach
-    </div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Handle section button clicks
-        document.querySelectorAll('.section-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                if (this.classList.contains('section-btn')) {
-                    // Update button styles
-                    document.querySelectorAll('.section-btn').forEach(btn => {
-                        btn.classList.remove('bg-blue-600', 'text-white');
-                        btn.classList.add('bg-white', 'text-gray-800', 'hover:bg-gray-100', 'border', 'border-gray-200');
-                    });
-                    this.classList.remove('bg-white', 'text-gray-800', 'hover:bg-gray-100', 'border', 'border-gray-200');
-                    this.classList.add('bg-blue-600', 'text-white');
-
-                    // Toggle section visibility
-                    document.querySelectorAll('.section-content').forEach(section => {
-                        section.classList.add('hidden');
-                    });
-                    document.querySelector(this.dataset.target).classList.remove('hidden');
-                }
-            });
-        });
-
-        // Delegate modal events (if needed)
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('[data-modal-toggle]')) {
-                // Handle modal toggling if needed
-            }
-        });
-    });
-</script> --}}
 <div class="mb-6">
-    <!-- Enhanced Tab Navigation -->
     <div class="relative mb-4">
-        <!-- Desktop Tabs -->
         <div class="hidden sm:flex rounded-lg overflow-hidden shadow-sm border border-gray-200 bg-gray-50">
             @foreach ($sections as $section)
                 <button type="button" 
@@ -73,7 +14,6 @@
             @endforeach
         </div>
 
-        <!-- Mobile Tabs (Dropdown) -->
         <div class="sm:hidden relative">
             <button id="mobile-tab-dropdown" class="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm text-gray-700 font-medium">
                 <span class="flex items-center">
@@ -95,8 +35,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Section Content -->
     <div class="bg-white rounded-lg shadow p-4 sm:p-6">
         @foreach ($sections as $section)
             <div id="{{ $section['id'] }}" class="section-content {{ $loop->first ? '' : 'hidden' }}">

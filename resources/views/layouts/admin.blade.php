@@ -169,7 +169,7 @@
 
                                 <!-- Profile dropdown menu (hidden by default) -->
                                 <div id="userMenu"
-                                    class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white  focus:outline-none">
+                                    class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white z-50 focus:outline-none">
                                     <a href="{{ route('users.profile') }}"
                                         class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
                                         <i class="fas fa-user mr-2"></i> My Profile
@@ -179,6 +179,7 @@
                                         <i class="fas fa-sign-out-alt mr-2"></i> Sign out
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                     </div>

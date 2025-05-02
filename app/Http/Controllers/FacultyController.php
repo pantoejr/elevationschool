@@ -50,7 +50,7 @@ class FacultyController extends Controller
             'attachments.*' => 'nullable|file|mimes:pdf,doc,docx,jpeg,png,jpg|max:5120',
         ]);
 
-        try {           
+        try {
 
             if ($request->hasFile('photo')) {
                 $photoPath = $this->uploadFile($request->file('photo'), 'faculty/photos');
@@ -62,8 +62,8 @@ class FacultyController extends Controller
                 'photo' => $photoPath ?? 'N/A',
                 'email' => $validated['email'],
                 'status' => $validated['status'],
-                'password' => Hash::make($validated['email']),
-                'login_hint' => $validated['email'],
+                'password' => Hash::make('P@55w0rd'),
+                'login_hint' => 'P@55w0rd',
             ]);
 
             $validated['created_by'] = Auth::user()->name;
@@ -77,7 +77,7 @@ class FacultyController extends Controller
             if ($request->hasFile('attachments')) {
                 foreach ($request->file('attachments') as $attachment) {
                     $attachmentPath = $this->uploadFile($attachment, 'faculty/attachments');
-                    
+
                     $faculty->attachments()->create([
                         'file_path' => $attachmentPath,
                         'file_name' => $attachment->getClientOriginalName(),
@@ -93,7 +93,7 @@ class FacultyController extends Controller
                 ->with('flag', 'success');
 
         } catch (\Exception $e) {
-           
+
             if (isset($photoPath)) {
                 Storage::delete($photoPath);
             }
@@ -187,7 +187,7 @@ class FacultyController extends Controller
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = $file->getClientOriginalExtension();
         $fileName = Str::slug($originalName) . '-' . uniqid() . '.' . $extension;
-        
+
         return $file->storeAs($directory, $fileName, 'public');
     }
 }
