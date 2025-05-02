@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'pantoejr@gmail.com',
             'password' => bcrypt('P@55w0rd'),
         ]);
+
+        $user = User::find(1);
+        $user->assignRole('Superadmin');
     }
 }
