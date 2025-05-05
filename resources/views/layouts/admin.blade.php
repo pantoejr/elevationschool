@@ -3,6 +3,7 @@
 @php
     $favicon = \App\Models\SystemVariable::where('type', 'favicon')->first();
     $fullName = \App\Models\SystemVariable::where('type', 'name')->first();
+    $shortName = \App\Models\SystemVariable::where('type', 'shortname')->first();
 @endphp
 
 <head>
@@ -15,7 +16,7 @@
     @endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css" />
     @if ($favicon)
         <link rel="icon" href="{{ asset('storage/' . $favicon->value) }}" type="x-icon">
     @else
@@ -41,7 +42,11 @@
             class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 z-30 transition duration-200 ease-in-out md:flex md:flex-shrink-0">
             <div class="flex flex-col w-60 h-full bg-blue-800"> <!-- Added h-full here -->
                 <div class="flex items-center justify-between h-16 flex-shrink-0 px-6 bg-blue-900">
-                    <h1 class="text-white text-xl font-semibold">Laravel</h1>
+                    @if (!empty($shortName->value))
+                        <h1 class="text-white text-xl font-semibold">{{ $shortName->value }}</h1>
+                    @else
+                        <h1 class="text-white text-xl font-semibold">Laravel</h1>
+                    @endif
                     <button id="closeSidebar" class="md:hidden text-white">
                         <i class="fas fa-times"></i>
                     </button>
@@ -97,6 +102,13 @@
                                 Attendances
                             </a>
                         @endcan
+                        @can('view-installments')
+                            <a href="{{ route('installments.index') }}"
+                                class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-lg font-medium rounded-md">
+                                <i class="fas fa-dollar-sign mr-3 text-white"></i>
+                                Installments
+                            </a>
+                        @endcan
                         @can('view-settings')
                             <div class="relative group">
                                 <button
@@ -131,7 +143,6 @@
                                             Variables
                                         </a>
                                     @endcan
-
                                 </div>
                             </div>
                         @endcan
@@ -177,9 +188,9 @@
                                 <!-- Profile dropdown menu (hidden by default) -->
                                 <div id="userMenu"
                                     class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white z-50 focus:outline-none">
-                                    <a href="{{ route('users.profile') }}"
+                                    <a href="{{ route('change-password') }}"
                                         class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
-                                        <i class="fas fa-user mr-2"></i> My Profile
+                                        <i class="fas fa-user mr-2"></i>Change Password
                                     </a>
                                     <a href="{{ route('auth.logout') }}"
                                         class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
@@ -251,6 +262,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
+            $('.dataTable').DataTable({});
             $('.delete-btn').on('click', function(event) {
                 event.preventDefault();
                 var form = $(this).closest('form');
@@ -272,6 +284,7 @@
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
     @livewireScripts
 </body>
 

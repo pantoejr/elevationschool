@@ -107,10 +107,10 @@ Route::controller(SectionController::class)->group(function () {
 
 Route::prefix('sections/{section}')->group(function () {
     Route::controller(SectionInstallmentController::class)->group(function () {
-        Route::post('installments/create', 'store')->name('installments.create')->can('add-installment');
-        Route::get('installments/{installment}/edit', 'edit')->name('installments.edit')->can('edit-installment');
-        Route::put('installments/{installment}', 'update')->name('installments.update')->can('update-installment');
-        Route::delete('installment/{installment}', 'destroy')->name('installments.destroy')->can('delete-installment');
+        Route::post('installments/create', 'store')->name('sectionInstallment.create')->can('add-installment');
+        Route::get('installments/{installment}/edit', 'edit')->name('sectionInstallment.edit')->can('edit-installment');
+        Route::put('installments/{installment}', 'update')->name('sectionInstallment.update')->can('update-installment');
+        Route::delete('installment/{installment}', 'destroy')->name('sectionInstallment.destroy')->can('delete-installment');
     });
 });
 
@@ -122,9 +122,9 @@ Route::controller(StudentController::class)->group(function () {
     Route::get('students/{student}/edit', 'edit')->name('students.edit');
     Route::put('students/{student}', 'update')->name('students.update');
     Route::delete('students/{student}', 'destroy')->name('students.destroy');
-    Route::post('students/attachments/store','storeStudentAttachment')->name('storeStudentAttachment');
+    Route::post('students/{student}/attachments/store','storeStudentAttachment')->name('storeStudentAttachment');
     Route::get('students/attachment/{attachment}','showStudentAttachment')->name('showStudentAttachment');
-    Route::delete('students/attachment/{attachment}','destroyStudentAttachment')->name('deleteStudentAttachment');
+    Route::post('students/{student}/attachment/{attachment}','destroyStudentAttachment')->name('deleteStudentAttachment');
 });
 
 Route::prefix('students/{student}')->group(function () {
@@ -167,6 +167,7 @@ Route::get('/generate-permissions', function () {
         'view-roles',
         'view-permissions',
         'view-variables',
+        'view-students',
         'add-student',
         'edit-student',
         'update-student',
@@ -207,6 +208,7 @@ Route::get('/generate-permissions', function () {
         'delete-variable',
         'view-variable-details',
         'view-installments',
+        'view-installment-details',
         'add-installment',
         'edit-installment',
         'update-installment',
@@ -219,6 +221,7 @@ Route::get('/generate-permissions', function () {
         'add-student-attachment',
         'view-student-attachment',
         'delete-student-attachment',
+        'download-student-attachment',
         'view-attendances',
         'add-attendance',
         'edit-attendance',

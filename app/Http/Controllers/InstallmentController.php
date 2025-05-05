@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Installment;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class InstallmentController extends Controller
 {
@@ -24,7 +25,9 @@ class InstallmentController extends Controller
 
     public function create()
     {
-        return view('installments.create');
+        return view('installments.create',[
+            'title' => 'Create Installment',
+        ]);
     }
 
     public function store(Request $request)
@@ -34,9 +37,16 @@ class InstallmentController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Installment::create($request->all());
+        Installment::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'created_by' => Auth::user()->name,
+            'updated_by' => Auth::user()->name,
+        ]);
 
-        return redirect()->route('installments.index')->with('success', 'Installment created successfully.');
+        return redirect()->route('installments.index')
+        ->with('success', 'Installment created successfully.')
+        ->with('flag','success');
     }
 
     public function show(Installment $installment)
@@ -49,7 +59,10 @@ class InstallmentController extends Controller
 
     public function edit(Installment $installment)
     {
-        return view('installments.edit', compact('installment'));
+        return view('installments.edit', [
+            'installment' => $installment,
+            'title' => 'Edit Installment'
+        ]);
     }
 
     public function update(Request $request, Installment $installment)
@@ -59,16 +72,22 @@ class InstallmentController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $installment->update($request->all());
-
-        return redirect()->route('installments.index')->with('success', 'Installment updated successfully.');
+        $installment->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'updated_by' => Auth::user()->name,
+        ]);
+        return to_route('installments.index')
+        ->with('success', 'Installment updated successfully.')
+        ->with('flag','success');
     }
 
     public function destroy(Installment $installment)
     {
         $installment->delete();
-
-        return redirect()->route('installments.index')->with('success', 'Installment deleted successfully.');
+        return to_route('installments.index')
+        ->with('success', 'Installment deleted successfully.')
+        ->with('flag','success');
     }
     
 }

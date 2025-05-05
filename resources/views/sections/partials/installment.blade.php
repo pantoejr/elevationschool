@@ -57,7 +57,8 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                                 @can('edit-installment')
-                                    <button type="button" data-modal-target="edit-installment-modal-{{ $sectionInstallment->id }}"
+                                    <button type="button"
+                                        data-modal-target="edit-installment-modal-{{ $sectionInstallment->id }}"
                                         data-modal-toggle="edit-installment-modal-{{ $sectionInstallment->id }}"
                                         class="text-yellow-600 hover:text-yellow-900 mr-4">
                                         <i class="fas fa-edit"></i>
@@ -65,7 +66,7 @@
                                 @endcan
                                 @can('delete-installment')
                                     <form
-                                        action="{{ route('installments.destroy', ['section' => $model, 'installment' => $sectionInstallment]) }}"
+                                        action="{{ route('sectionInstallment.destroy', ['section' => $model, 'installment' => $sectionInstallment]) }}"
                                         style="display: inline-block" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -84,7 +85,7 @@
                                 <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg shadow-sm">
                                     <form
-                                        action="{{ route('installments.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
+                                        action="{{ route('sectionInstallment.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
                                         method="POST">
                                         @method('PUT')
                                         @csrf
@@ -110,12 +111,15 @@
                                             <div class="grid grid-cols-1">
                                                 <input type="hidden" name="section_id" value="{{ $model->id }}">
                                                 <div class="mb-4">
-                                                    <label for="name-{{ $sectionInstallment->id }}"
-                                                        class="block text-sm font-medium text-gray-700">Name</label>
-                                                    <input type="text" name="name"
-                                                        id="name-{{ $sectionInstallment->id }}"
-                                                        value="{{ $sectionInstallment->name }}" required
+                                                    <label for="installment_id-{{ $sectionInstallment->id }}"
+                                                        class="block text-sm font-medium text-gray-700">Currency</label>
+                                                    <select name="installment_id"
+                                                        id="installment_id-{{ $sectionInstallment->id }}" required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                                        <option value="{{ $sectionInstallment->installment->id }}">
+                                                            {{ $sectionInstallment->installment->name }}
+                                                        </option>
+                                                    </select>
                                                 </div>
                                                 <div class="mb-4">
                                                     <label for="amount-{{ $sectionInstallment->id }}"
@@ -132,10 +136,12 @@
                                                         required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                         <option value="USD"
-                                                            {{ $sectionInstallment->currency == 'USD' ? 'selected' : '' }}>USD
+                                                            {{ $sectionInstallment->currency == 'USD' ? 'selected' : '' }}>
+                                                            USD
                                                         </option>
                                                         <option value="LRD"
-                                                            {{ $sectionInstallment->currency == 'LRD' ? 'selected' : '' }}>LRD
+                                                            {{ $sectionInstallment->currency == 'LRD' ? 'selected' : '' }}>
+                                                            LRD
                                                         </option>
                                                     </select>
                                                 </div>
@@ -165,7 +171,8 @@
                                         <div class="flex items-center p-4 md:p-5 rounded-b">
                                             <button type="submit"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
-                                            <button data-modal-hide="edit-installment-modal-{{ $sectionInstallment->id }}"
+                                            <button
+                                                data-modal-hide="edit-installment-modal-{{ $sectionInstallment->id }}"
                                                 type="button"
                                                 class="py-2.5 px-5 ms-3 text-sm font-medium focus:outline-none bg-red-600 rounded-lg border border-gray-200 hover:bg-red-700 text-white">Cancel</button>
                                         </div>
@@ -189,7 +196,7 @@
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm ">
-            <form action="{{ route('installments.create', ['section' => $model]) }}" method="POST">
+            <form action="{{ route('sectionInstallment.create', ['section' => $model]) }}" method="POST">
                 @csrf
                 <div class="flex items-center justify-between p-4 md:p-5  rounded-t  border-gray-200">
                     <h3 class="text-xl font-semibold text-gray-900">

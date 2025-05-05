@@ -8,11 +8,11 @@
             </a>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto p-5">
             @if ($permissions->isEmpty())
                 <p class="text-gray-700 text-center py-3">No record found...</p>
             @else
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="min-w-full divide-y divide-gray-200 dataTable nowrap">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"

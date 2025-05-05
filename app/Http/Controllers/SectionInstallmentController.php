@@ -85,15 +85,15 @@ class SectionInstallmentController extends Controller
         ]);
 
 
-        $existingInstallmentsSum = SectionInstallment::where('section_id', $section->id)->sum('amount');
+        // $existingInstallmentsSum = SectionInstallment::where('section_id', $section->id)->sum('amount');
 
-        $newInstallmentTotal = $existingInstallmentsSum + $request->amount;
+        // $newInstallmentTotal = $existingInstallmentsSum + $request->amount;
 
-        if ($newInstallmentTotal > $section->course_cost) {
-            return back()
-                ->with('success', 'The total amount of installments exceeds the section course cost.')
-                ->with('flag', 'error');
-        }
+        // if ($newInstallmentTotal > $section->course_cost) {
+        //     return back()
+        //         ->with('success', 'The total amount of installments exceeds the section course cost.')
+        //         ->with('flag', 'error');
+        // }
 
         try {
 

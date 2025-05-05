@@ -229,7 +229,7 @@
                         @foreach ($upcomingInstallments as $installment)
                             <tr class="hover:bg-gray-50 transition-colors duration-150">
                                 <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {{ $installment->name }}</td>
+                                    {{ $installment->installment->name }}</td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                                     {{ $installment->section->name }}</td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">

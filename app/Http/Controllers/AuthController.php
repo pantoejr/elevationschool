@@ -62,7 +62,6 @@ class AuthController extends Controller
         ]);
 
         $user = Auth::user();
-
         if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'The current password is incorrect.']);
         }
@@ -71,13 +70,15 @@ class AuthController extends Controller
         $user->login_hint = $request->new_password;
         $user->save();
         activity()->causedBy(Auth::user())->withProperties(['ip' => request()->ip()])->log('Password Changed');
-        return redirect()->route('app.index')->with('msg', 'Password changed successfully.')
+        return redirect()->route('home.index')->with('success', 'Password changed successfully.')
             ->with('flag', 'success');
     }
 
     public function showLinkRequestForm()
     {
-        return view('auth.resetpassword');
+        return view('auth.resetpassword', [
+            'title' => 'Reset Password',
+        ]);
     }
 
     public function sendResetLinkEmail(Request $request)
