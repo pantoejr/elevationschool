@@ -250,7 +250,7 @@
                             <div class="mb-4">
                                 <label for="status" class="block text-md font-medium text-gray-700">Status</label>
                                 <select name="status" id="status"
-                                    class="mt-1 block w-full border-gray-300 p-4 border border-gray-300  rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                    class="mt-1 block w-full border-gray-300 p-4 border  rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200">
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                 </select>

@@ -15,6 +15,8 @@
         <title>{{ env('APP_NAME') }}</title>
     @endif
 
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css" />
     @if ($favicon)

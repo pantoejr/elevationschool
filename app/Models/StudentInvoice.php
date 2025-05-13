@@ -8,12 +8,15 @@ class StudentInvoice extends Model
 {
     //
     protected $fillable = [
+        'invoice_id',
         'student_section_id',
         'amount_paid',
         'balance',
         'due_date',
         'currency',
         'is_completed',
+        'created_by',
+        'updated_by'
     ];
 
     public function studentSection()

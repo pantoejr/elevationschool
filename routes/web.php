@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstallmentController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionController;
@@ -29,6 +30,15 @@ Route::controller(PermissionController::class)->group(function () {
     Route::get('permissions/{permission}/edit', 'edit')->name('permissions.edit')->can('edit-permission');
     Route::put('permissions/{permission}', 'update')->name('permissions.update')->can('update-permission');
     Route::delete('permissions/{permission}', 'destroy')->name('permissions.destroy')->can('delete-permission');
+});
+
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('payments','index')->name('payments.index');
+    Route::get('payments/create','create')->name('payments.create');
+    Route::post('payments/store','store')->name('payments.store');
+    Route::get('payments/get_student','getStudent')->name('payments.getStudent');
+    Route::get('payments/{payment}/edit', 'edit')->name('payments.edit');
+    Route::delete('payments/{payment}', 'destroy')->name('payments.destroy');
 });
 
 Route::controller(RoleController::class)->group(function () {
@@ -107,6 +117,7 @@ Route::controller(SectionController::class)->group(function () {
 
 Route::prefix('sections/{section}')->group(function () {
     Route::controller(SectionInstallmentController::class)->group(function () {
+
         Route::post('installments/create', 'store')->name('sectionInstallment.create')->can('add-installment');
         Route::get('installments/{installment}/edit', 'edit')->name('sectionInstallment.edit')->can('edit-installment');
         Route::put('installments/{installment}', 'update')->name('sectionInstallment.update')->can('update-installment');

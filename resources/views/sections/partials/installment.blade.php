@@ -66,7 +66,7 @@
                                 @endcan
                                 @can('delete-installment')
                                     <form
-                                        action="{{ route('sectionInstallment.destroy', ['section' => $model, 'installment' => $sectionInstallment]) }}"
+                                        action="{{ route('sectioninstallments.destroy', ['section' => $model, 'installment' => $sectionInstallment]) }}"
                                         style="display: inline-block" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -84,8 +84,7 @@
                             <div class="relative p-4 w-full max-w-2xl max-h-full">
                                 <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg shadow-sm">
-                                    <form
-                                        action="{{ route('sectionInstallment.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
+                                    <form action="{{ route('sectioninstallments.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
                                         method="POST">
                                         @method('PUT')
                                         @csrf
@@ -110,16 +109,22 @@
                                         <div class="p-4 md:p-5 space-y-4">
                                             <div class="grid grid-cols-1">
                                                 <input type="hidden" name="section_id" value="{{ $model->id }}">
+                                                
                                                 <div class="mb-4">
-                                                    <label for="installment_id-{{ $sectionInstallment->id }}"
-                                                        class="block text-sm font-medium text-gray-700">Currency</label>
-                                                    <select name="installment_id"
-                                                        id="installment_id-{{ $sectionInstallment->id }}" required
+                                                    <label for="installment_id"
+                                                        class="block text-sm font-medium text-gray-700">Installment</label>
+                                                    <select name="installment_id" required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
-                                                        <option value="{{ $sectionInstallment->installment->id }}">
-                                                            {{ $sectionInstallment->installment->name }}
-                                                        </option>
+                                                        @foreach ($installments as $installment)
+                                                            <option value="{{ $installment->id }}" {{ $sectionInstallment->installment_id == $installment->id ? 'selected' : '' }}>
+                                                                {{ $installment->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
+                                                    @error('installment_id')
+                                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
+
                                                 </div>
                                                 <div class="mb-4">
                                                     <label for="amount-{{ $sectionInstallment->id }}"
@@ -196,7 +201,7 @@
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm ">
-            <form action="{{ route('sectionInstallment.create', ['section' => $model]) }}" method="POST">
+            <form action="{{ route('sectioninstallments.create', ['section' => $model]) }}" method="POST">
                 @csrf
                 <div class="flex items-center justify-between p-4 md:p-5  rounded-t  border-gray-200">
                     <h3 class="text-xl font-semibold text-gray-900">
