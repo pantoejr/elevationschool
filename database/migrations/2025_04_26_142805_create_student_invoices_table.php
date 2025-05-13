@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('due_date');
             $table->enum('currency', ['USD', 'LRD']);
             $table->boolean('is_completed');
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
     <div class="max-w-6xl mx-auto bg-white rounded-md shadow-md overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-800">{{ $title }}</h2>
-            <a href="{{ route('roles.create') }}" class="px-2 py-1 rounded-sm bg-blue-600 text-white hover:bg-blue-700">
+            <a href="{{ route('installments.create') }}" class="px-2 py-1 rounded-sm bg-blue-600 text-white hover:bg-blue-700">
                 <i class="fas fa-plus-circle"></i>
             </a>
         </div>
@@ -40,15 +40,15 @@
                                     {{ $installment->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
-                                    <a href="{{ route('roles.edit', ['role' => $role]) }}"
+                                    <a href="{{ route('installments.edit', ['installment' => $installment]) }}"
                                         class="text-yellow-600 hover:text-yellow-900 mr-4">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('roles.show', ['role' => $role]) }}"
+                                    <a href="{{ route('installments.show', ['installment' => $installment]) }}"
                                         class="text-blue-600 hover:text-blue-900 mr-4">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <form action="{{ route('roles.destroy', ['role' => $role]) }}"
+                                    <form action="{{ route('installments.destroy', ['installment' => $installment]) }}"
                                         style="display: inline-block">
                                         @csrf
                                         @method('DELETE')

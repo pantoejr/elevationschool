@@ -24,7 +24,10 @@ class InstallmentController extends Controller
 
     public function create()
     {
-        return view('installments.create');
+        return view('installments.create',
+            [
+                'title' => 'Create Installment',
+            ]);
     }
 
     public function store(Request $request)

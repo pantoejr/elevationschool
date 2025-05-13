@@ -25,7 +25,7 @@ class SectionInstallmentController extends Controller
     public function store(Request $request, Section $section)
     {
         $request->validate([
-            'section_id' => 'required|exists:sections,id',
+            //'section_id' => 'required|exists:sections,id',
             'installment_id' => 'required|exists:installments,id',
             'amount' => 'required|numeric',
             'currency' => 'in:USD,LRD',
@@ -87,7 +87,7 @@ class SectionInstallmentController extends Controller
 
         $existingInstallmentsSum = SectionInstallment::where('section_id', $section->id)->sum('amount');
 
-        $newInstallmentTotal = $existingInstallmentsSum + $request->amount;
+        $newInstallmentTotal = $existingInstallmentsSum + $request->amount - $installment->amount;
 
         if ($newInstallmentTotal > $section->course_cost) {
             return back()
