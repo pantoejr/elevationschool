@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -249,11 +250,33 @@ class StudentController extends Controller
 
     public function destroyStudentAttachment(Student $student, Attachment $attachment)
     {
-        Storage::delete($attachment->file_path);
-        $attachment->delete();
-        return redirect()->route('students.show', ['student' => $student])
-            ->with('success', 'Student document deleted successfully')
-            ->with('flag', 'success');
+        // if ($attachment->attachmentable()->student->id !== $student->id) {
+        //     abort(403, 'Unauthorized action: This attachment does not belong to the specified student');
+        // }
+        DB::beginTransaction();
+        try {
+            $filePath = $attachment->file_path;
+
+            $attachment->delete();
+
+            if (Storage::exists($filePath)) {
+                Storage::delete($filePath);
+            } else {
+                Log::warning("File not found during deletion attempt: {$filePath}");
+            }
+
+            DB::commit();
+
+            return redirect()
+                ->route('students.show', ['student' => $student])
+                ->with('success', 'Attachment deleted successfully');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect()
+                ->route('students.show', ['student' => $student])
+                ->with('error', 'Failed to delete attachment. Please try again.');
+        }
     }
 
     public function storeStudentAttachment(Request $request, Student $student)
@@ -272,8 +295,22 @@ class StudentController extends Controller
         }
     }
 
-    public function showStudentAttachment(Attachment $attachment){
-        return view();
+    public function showStudentAttachment(Attachment $attachment)
+    {
+        if (!Storage::exists($attachment->file_path)) {
+            abort(404, 'File not found');
+        }
+
+        $filename = $attachment->original_name ?? basename($attachment->file_path);
+
+        $mimeType = Storage::mimeType($attachment->file_path);
+
+        $headers = [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        return Storage::download($attachment->file_path, $filename, $headers);
     }
 
     private function uploadFile($file, $directory)

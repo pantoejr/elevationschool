@@ -14,4 +14,9 @@ class Attachment extends Model
         'created_by',
         'updated_by',
     ];
+    
+    public function attachmentable()
+    {
+        return $this->morphTo();
+    }
 }
