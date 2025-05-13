@@ -8,8 +8,8 @@
             </a>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+        <div class="overflow-x-auto p-5">
+            <table class="min-w-full divide-y divide-gray-200 dataTable nowrap">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col"
@@ -28,6 +28,10 @@
                         <th scope="col"
                             class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
                             Max Students
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
+                            No of Student Enrolled
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
@@ -60,6 +64,9 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
                                 {{ $section->max_students }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+                                {{ $section->no_of_students }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span
@@ -96,5 +103,5 @@
             </table>
         </div>
     </div>
-</div>
+    </div>
 @endsection

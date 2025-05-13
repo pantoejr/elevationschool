@@ -2,8 +2,9 @@
 <html lang="en">
 @php
     $logo = \App\Models\SystemVariable::where('type', 'logo')->first();
-    $fullName = \App\Models\SystemVariable::where('type', 'name')->first();
+    $shortName = \App\Models\SystemVariable::where('type', 'shortname')->first();
     $favicon = \App\Models\SystemVariable::where('type', 'favicon')->first();
+
 @endphp
 
 <head>
@@ -14,8 +15,8 @@
     @else
         <link rel="icon" href="" type="image/x-icon">
     @endif
-    @if ($fullName)
-        <title>{{ $fullName->value }} | {{ $title }}</title>
+    @if ($shortName)
+        <title>{{ $shortName->value }} | {{ $title }}</title>
     @else
         <title>{{ env('APP_NAME') }}</title>
     @endif
@@ -27,11 +28,18 @@
 
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md">
+        <div class="relative text-center flex items-center justify-center min-h-[75px] mb-5">
+            @if ($logo)
+                <img src="{{ asset('storage/' . $logo->value) }}" alt="logo"
+                    class="mx-auto max-w-[220px] max-h-[100px] object-contain">
+            @endif
+        </div>
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="relative bg-blue-800 text-center flex items-center justify-center min-h-[75px]">
-                @if ($logo)
-                    <img src="{{ asset('storage/' . $logo->value) }}" alt="logo"
-                        class="mx-auto max-w-[140px] max-h-[80px] object-contain">
+                @if ($shortName)
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">{{ $shortName->value }}</h1>
+                    </div>
                 @else
                     <div>
                         <h1 class="text-2xl font-bold text-white">Welcome Back</h1>
@@ -69,7 +77,7 @@
                             class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
                         <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
                     </div>
-                    <a href="#" class="text-sm text-primary hover:text-primary-dark">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="text-sm text-primary hover:text-primary-dark">Forgot password?</a>
                 </div>
                 <button type="submit"
                     class="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-800 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">

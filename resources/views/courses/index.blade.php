@@ -8,8 +8,8 @@
         </a>
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
+    <div class="overflow-x-auto p-5">
+        <table class="min-w-full divide-y divide-gray-200  dataTable nowrap">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col"
@@ -43,7 +43,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
                             {{ ucfirst($course->duration) }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                        <td class="px-6 py-4 whitespace-nowrap text-left text-md font-medium">
                             <a href="{{ route('courses.edit', ['course' => $course]) }}"
                                 class="text-yellow-600 hover:text-yellow-900 mr-4">
                                 <i class="fas fa-edit"></i>

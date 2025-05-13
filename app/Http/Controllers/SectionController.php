@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Faculty;
 use App\Models\Installment;
 use App\Models\Section;
+use App\Models\SectionInstallment;
 use App\Models\Student;
 use Exception;
 use Illuminate\Http\Request;
@@ -127,7 +128,12 @@ class SectionController extends Controller
 
     public function show(Section $section)
     {
-        $installments = Installment::all();
+
+        $assignInstallmentsId = SectionInstallment::where('section_id', $section->id)
+            ->pluck('installment_id');
+
+        $installments = Installment::whereNotIn('id', $assignInstallmentsId)
+            ->get();
         return view('sections.show', [
             'title' => 'Section Details',
             'section' => $section,

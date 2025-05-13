@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attachment;
 use App\Models\Installment;
 use App\Models\Section;
 use App\Models\Student;
@@ -117,6 +118,9 @@ class StudentController extends Controller
                 $this->handleStudentAttachments($request->file('attachments'), $student);
             }
 
+            $section->no_of_students += 1;
+            $section->save();
+
             StudentSection::create([
                 'student_id' => $student->id,
                 'section_id' => $request->section_id,
@@ -223,11 +227,9 @@ class StudentController extends Controller
     {
         $assignedSectionIds = StudentSection::where('student_id', $student->id)
             ->pluck('section_id');
-
         $sections = Section::where('status', 'active')
             ->whereNotIn('id', $assignedSectionIds)
             ->get();
-
         return view('students.show', [
             'student' => $student,
             'title' => 'Student Details',
@@ -244,12 +246,41 @@ class StudentController extends Controller
             ->with('flag', 'success');
     }
 
+
+    public function destroyStudentAttachment(Student $student, Attachment $attachment)
+    {
+        Storage::delete($attachment->file_path);
+        $attachment->delete();
+        return redirect()->route('students.show', ['student' => $student])
+            ->with('success', 'Student document deleted successfully')
+            ->with('flag', 'success');
+    }
+
+    public function storeStudentAttachment(Request $request, Student $student)
+    {
+        try {
+            $request->validate([
+                'attachments.*' => 'required'
+            ]);
+            $this->handleStudentAttachments($request->file('attachments'), $student);
+            return to_route('students.show', ['student' => $student])
+                ->with('success', 'Student document uploaded successfully')
+                ->with('flag', 'success');
+        } catch (Exception $ex) {
+            return back()->with('success', 'Error uploading file' . $ex->getMessage())
+                ->with('flag', 'error');
+        }
+    }
+
+    public function showStudentAttachment(Attachment $attachment){
+        return view();
+    }
+
     private function uploadFile($file, $directory)
     {
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = $file->getClientOriginalExtension();
         $fileName = Str::slug($originalName) . '-' . uniqid() . '.' . $extension;
-
         return $file->storeAs($directory, $fileName, 'public');
     }
 

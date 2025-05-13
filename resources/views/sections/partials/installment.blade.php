@@ -57,7 +57,8 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                                 @can('edit-installment')
-                                    <button type="button" data-modal-target="edit-installment-modal-{{ $sectionInstallment->id }}"
+                                    <button type="button"
+                                        data-modal-target="edit-installment-modal-{{ $sectionInstallment->id }}"
                                         data-modal-toggle="edit-installment-modal-{{ $sectionInstallment->id }}"
                                         class="text-yellow-600 hover:text-yellow-900 mr-4">
                                         <i class="fas fa-edit"></i>
@@ -83,8 +84,7 @@
                             <div class="relative p-4 w-full max-w-2xl max-h-full">
                                 <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg shadow-sm">
-                                    <form
-                                        action="{{ route('sectioninstallments.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
+                                    <form action="{{ route('sectioninstallments.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
                                         method="POST">
                                         @method('PUT')
                                         @csrf
@@ -124,6 +124,7 @@
                                                     @error('installment_id')
                                                         <span class="text-red-500 text-sm">{{ $message }}</span>
                                                     @enderror
+
                                                 </div>
                                                 <div class="mb-4">
                                                     <label for="amount-{{ $sectionInstallment->id }}"
@@ -140,10 +141,12 @@
                                                         required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                         <option value="USD"
-                                                            {{ $sectionInstallment->currency == 'USD' ? 'selected' : '' }}>USD
+                                                            {{ $sectionInstallment->currency == 'USD' ? 'selected' : '' }}>
+                                                            USD
                                                         </option>
                                                         <option value="LRD"
-                                                            {{ $sectionInstallment->currency == 'LRD' ? 'selected' : '' }}>LRD
+                                                            {{ $sectionInstallment->currency == 'LRD' ? 'selected' : '' }}>
+                                                            LRD
                                                         </option>
                                                     </select>
                                                 </div>
@@ -173,7 +176,8 @@
                                         <div class="flex items-center p-4 md:p-5 rounded-b">
                                             <button type="submit"
                                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
-                                            <button data-modal-hide="edit-installment-modal-{{ $sectionInstallment->id }}"
+                                            <button
+                                                data-modal-hide="edit-installment-modal-{{ $sectionInstallment->id }}"
                                                 type="button"
                                                 class="py-2.5 px-5 ms-3 text-sm font-medium focus:outline-none bg-red-600 rounded-lg border border-gray-200 hover:bg-red-700 text-white">Cancel</button>
                                         </div>

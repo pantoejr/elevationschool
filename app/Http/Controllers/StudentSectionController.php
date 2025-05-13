@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\StudentSection;
 use Exception;
@@ -18,14 +19,13 @@ class StudentSectionController extends Controller
 
     public function store(Request $request, Student $student)
     {
+        $section = Section::findOrFail($request->section_id);
         try {
             $request->validate([
                 'student_id' => 'required|exists:students,id',
                 'section_id' => 'required|exists:sections,id',
                 'status' => 'required|in:active,inactive',
             ]);
-
-
 
             StudentSection::create([
                 'student_id' => $request->student_id,
@@ -34,6 +34,9 @@ class StudentSectionController extends Controller
                 'created_by' => Auth::user()->name,
                 'updated_by' => Auth::user()->name,
             ]);
+
+            $section->no_of_students += 1;
+            $section->save();
 
             return to_route('students.show', ['student' => $student])
                 ->with('success', 'Student added to section successfully')
