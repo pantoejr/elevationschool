@@ -117,7 +117,6 @@ Route::controller(SectionController::class)->group(function () {
 
 Route::prefix('sections/{section}')->group(function () {
     Route::controller(SectionInstallmentController::class)->group(function () {
-
         Route::post('installments/create', 'store')->name('sectionInstallment.create')->can('add-installment');
         Route::get('installments/{installment}/edit', 'edit')->name('sectionInstallment.edit')->can('edit-installment');
         Route::put('installments/{installment}', 'update')->name('sectionInstallment.update')->can('update-installment');

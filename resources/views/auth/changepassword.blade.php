@@ -9,7 +9,8 @@
                     </div>
                 </div>
 
-                <form class="p-6 space-y-6" method="POST" action="{{ route('password.email') }}">
+                <form class="p-6 space-y-6" method="POST" action="{{ route('confirm-change-password') }}">
+                    @csrf
                     <div class="space-y-2">
                         <label for="current_password" class="block text-sm font-medium text-gray-700">Current Password</label>
                         <div class="relative">
