@@ -255,8 +255,8 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
-                                    <button class="text-green-600 hover:text-green-900">Pay</button>
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">Notify (Email)</button>
+                                    <button class="text-green-600 hover:text-green-900">Notify (SMS)</button>
                                 </td>
                             </tr>
                         @endforeach

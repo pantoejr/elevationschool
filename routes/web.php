@@ -38,7 +38,11 @@ Route::controller(PaymentController::class)->group(function () {
     Route::post('payments/store','store')->name('payments.store');
     Route::get('payments/get_student','getStudent')->name('payments.getStudent');
     Route::get('payments/{payment}/edit', 'edit')->name('payments.edit');
+    Route::put('payments/{payment}/update', 'update')->name('payments.update');
+    Route::get('payments/{payment}','show')->name('payments.show');
     Route::delete('payments/{payment}', 'destroy')->name('payments.destroy');
+    Route::get('payments/{payment}/print', 'previewPdf')->name('payments.previewPdf');
+    Route::get('payments/{payment}/download', 'downloadPdf')->name('payments.downloadPdf');
 });
 
 Route::controller(RoleController::class)->group(function () {
@@ -135,6 +139,7 @@ Route::controller(StudentController::class)->group(function () {
     Route::post('students/{student}/attachments/store','storeStudentAttachment')->name('storeStudentAttachment');
     Route::get('students/attachment/{attachment}','showStudentAttachment')->name('showStudentAttachment');
     Route::post('students/{student}/attachment/{attachment}','destroyStudentAttachment')->name('deleteStudentAttachment');
+    Route::get('students/{student}/download-profile-pdf', 'downloadProfilePdf')->name('students.downloadProfilePdf');
 });
 
 Route::prefix('students/{student}')->group(function () {
@@ -168,6 +173,12 @@ Route::controller(AttendanceController::class)->group(function(){
 
 Route::get('/generate-permissions', function () {
     $permissions = [
+        'view-payments',
+        'add-payment',
+        'edit-payment',
+        'update-payment',
+        'delete-payment',
+        'approve-payment',
         'view-dashboard',
         'view-faculties',
         'view-courses',

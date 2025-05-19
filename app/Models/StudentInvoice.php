@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentInvoice extends Model
 {
-    //
+    protected $primaryKey = 'invoice_id';
+    public $incrementing = false; 
+    protected $keyType = 'string';
+
     protected $fillable = [
         'invoice_id',
         'student_section_id',

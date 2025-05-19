@@ -17,6 +17,8 @@ class Payment extends Model
         'status',
         'notes',
         'attachment',
+        'created_by',
+        'updated_by',
     ];
 
     public function studentInvoice()

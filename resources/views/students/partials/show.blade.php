@@ -1,8 +1,15 @@
 <div class="grid grid-cols-1 mx-auto">
     <div class="overflow-hidden">
         <!-- Header -->
-        <div class="bg-gradient-to-r from-blue to-blue-dark p-6 text-black">
-            <h1 class="text-2xl font-bold">Student Details</h1>
+        <div class="mb-6 flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-gray-800">Student Details</h2>
+
+            <div class="flex items-center gap-2">
+                <a href="{{ route('students.downloadProfilePdf', ['student' => $model]) }}" target="_blank"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <i class="fas fa-download"></i>
+                </a>
+            </div>
         </div>
 
         <!-- Photo Upload Section -->

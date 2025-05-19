@@ -7,6 +7,7 @@ use App\Models\Installment;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\StudentSection;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -109,7 +110,7 @@ class StudentController extends Controller
                 'computer_literacy' => $request->computer_literacy,
                 'education_status' => $request->education_status,
                 'course_applying_for' => $courseName,
-                'is_new' => $request->is_new,
+                'is_new' => $request->is_new ? 1 : 0,
                 'status' => $request->status,
                 'created_by' => Auth::user()->name,
                 'updated_by' => Auth::user()->name,
@@ -333,5 +334,12 @@ class StudentController extends Controller
                 'updated_by' => Auth::user()->name,
             ]);
         }
+    }
+
+    public function downloadProfilePdf(Student $student)
+    {
+        return Pdf::loadView('students.pdf', ['model' => $student])
+            ->setPaper('A4', 'portrait')
+            ->download('student_profile_' . $student->first_name . '_' . $student->last_name . '_' . now()->format('Ymd') . '.pdf');
     }
 }

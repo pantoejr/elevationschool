@@ -25,7 +25,11 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
-                                Amonut
+                                Reference
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
+                                Amount
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider">
@@ -41,19 +45,25 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                    {{ $payment->studentInvoice->studentSection->student->first_name }}
+                                    {{ $payment->studentInvoice->studentSection->student->first_name . ' ' . $payment->studentInvoice->studentSection->student->middle_name . ' ' . $payment->studentInvoice->studentSection->student->last_name  }}
                                 </td>
-
+                                 <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+                                    {{ $payment->payment_reference }}
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                    {{ $payment->amount_paid }}
+                                    ${{ $payment->amount_paid }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                                     <a href="{{ route('payments.edit', ['payment' => $payment]) }}"
                                         class="text-yellow-600 hover:text-yellow-900 mr-4">
                                         <i class="fas fa-edit"></i>
                                     </a>
+                                    <a href="{{ route('payments.show', ['payment' => $payment]) }}"
+                                        class="text-blue-600 hover:text-blue-900 mr-4">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
                                     <form action="{{ route('payments.destroy', ['payment' => $payment]) }}"
-                                        style="display: inline-block">
+                                        style="display: inline-block" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="text-red-600 hover:text-red-900 delete-btn">
@@ -64,7 +74,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             @endif

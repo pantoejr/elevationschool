@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class SystemVariableController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['auth']);
     }
 
@@ -96,7 +98,6 @@ class SystemVariableController extends Controller
             return back()->with('success', 'Error: ' . $ex->getMessage())
                 ->with('flag', 'danger');
         }
-
     }
 
     public function show(SystemVariable $systemVariable)
@@ -109,7 +110,11 @@ class SystemVariableController extends Controller
 
     public function destroy(SystemVariable $systemVariable)
     {
+        if (in_array($systemVariable->type, ['favicon', 'logo'])) {
+            Storage::disk('public')->delete($systemVariable->value);
+        }
         $systemVariable->delete();
+
         return to_route('variables.index')
             ->with('success', 'System Variable deleted successfully')
             ->with('flag', 'success');
