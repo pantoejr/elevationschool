@@ -215,6 +215,7 @@ class PaymentController extends Controller
 
     function generateRandomNumericString($length = 6)
     {
+
         $digits = '';
         for ($i = 0; $i < $length; $i++) {
             $digits .= random_int(0, 9);
