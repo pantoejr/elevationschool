@@ -37,26 +37,30 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_id.*' => 'required|exists:students,id',
             'section_id' => 'required|exists:sections,id',
             'date' => 'required|date',
-            'status.*' => 'required|in:present,absent,late',
+            'attendance' => 'required|array',
+            'attendance.*' => 'required|in:present,absent,late',
+            'note' => 'nullable|array',
             'note.*' => 'nullable|string',
         ]);
 
-        Attendance::updateOrCreate(
-            [
-                'student_id' => $request->student_id,
-                'section_id' => $request->section_id,
-                'date' => $request->date,
-            ],
-            [
-                'status' => $request->status,
-                'note' => $request->remarks,
-            ]
-        );
+        foreach ($request->attendance as $student_id => $status) {
+            Attendance::updateOrCreate(
+                [
+                    'student_id' => $student_id,
+                    'section_id' => $request->section_id,
+                    'date' => $request->date,
+                ],
+                [
+                    'status' => $status,
+                    'note' => $request->note[$student_id] ?? null,
+                ]
+            );
+        }
 
-        return to_route('attendances.index')->with('success', 'Attendance recorded successfully')
+        return to_route('attendances.index')
+            ->with('success', 'Attendance recorded successfully')
             ->with('flag', 'success');
     }
 }

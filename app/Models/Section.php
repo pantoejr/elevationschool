@@ -13,27 +13,36 @@ class Section extends Model
         'start_date',
         'end_date',
         'status',
+        'schedule',
         'max_students',
         'no_of_students',
         'course_cost',
         'currency',
         'created_by',
-        'updated_by'
+        'updated_by',
     ];
 
-    public function course(){
+    protected $casts = [
+        'schedule' => 'array',
+    ];
+
+    public function course()
+    {
         return $this->belongsTo(Course::class);
     }
 
-    public function faculty(){
+    public function faculty()
+    {
         return $this->belongsTo(Faculty::class);
     }
 
-    public function sectionInstallments(){
+    public function sectionInstallments()
+    {
         return $this->hasMany(SectionInstallment::class);
     }
 
-    public function students(){
+    public function students()
+    {
         return $this->hasMany(Student::class);
     }
 }

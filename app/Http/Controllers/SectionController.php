@@ -55,6 +55,11 @@ class SectionController extends Controller
             'max_students' => 'required|numeric',
             'course_cost' => 'required|numeric',
             'currency' => 'required|in:USD,LRD',
+            'schedule' => 'required|array',
+            'schedule.*.day' => 'required|string',
+            'schedule.*.start_time' => 'required',
+            'schedule.*.end_time' => 'required',
+            'schedule.*.location' => 'required|string',
         ]);
 
         try {
@@ -67,6 +72,7 @@ class SectionController extends Controller
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
                 'status' => $request->status,
+                'schedule' => $request->schedule,
                 'course_cost' => $request->course_cost,
                 'currency' => $request->currency,
                 'created_by' => Auth::user()->name,
@@ -106,6 +112,11 @@ class SectionController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after:start_date',
             'status' => 'required|in:active,inactive',
+            'schedule' => 'required|array',
+            'schedule.*.day' => 'required|string',
+            'schedule.*.start_time' => 'required',
+            'schedule.*.end_time' => 'required',
+            'schedule.*.location' => 'required|string',
         ]);
 
         try {
@@ -119,6 +130,7 @@ class SectionController extends Controller
                 'currency' => $request->currency,
                 'end_date' => $request->end_date,
                 'status' => $request->status,
+                'schedule' => $request->schedule,
                 'updated_by' => Auth::user()->name,
             ]);
 

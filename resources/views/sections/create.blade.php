@@ -107,6 +107,38 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="grid grid-cols-1">
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Schedule</label>
+                            <div id="schedule-list">
+                                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2 schedule-row">
+                                    <select name="schedule[0][day]"
+                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200"
+                                        required>
+                                        <option value="">Select Day</option>
+                                        <option>Monday</option>
+                                        <option>Tuesday</option>
+                                        <option>Wednesday</option>
+                                        <option>Thursday</option>
+                                        <option>Friday</option>
+                                        <option>Saturday</option>
+                                        <option>Sunday</option>
+                                    </select>
+                                    <input type="time" name="schedule[0][start_time]"
+                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200"
+                                        required placeholder="Start Time">
+                                    <input type="time" name="schedule[0][end_time]"
+                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200"
+                                        required placeholder="End Time">
+                                    <input type="text" name="schedule[0][location]"
+                                        class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200"
+                                        required placeholder="Location">
+                                </div>
+                            </div>
+                            <button type="button" id="add-schedule-row"
+                                class="mt-2 px-3 py-1 bg-green-500 text-white rounded">Add Day</button>
+                        </div>
+                    </div>
 
                     <div class="flex justify-between pt-6  border-gray-200">
                         <a href="{{ route('sections.index') }}"
@@ -122,4 +154,33 @@
             </div>
         </div>
     </div>
+    <script>
+        let scheduleIndex = 1;
+        $('#add-schedule-row').on('click', function() {
+            let row = `
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2 schedule-row">
+            <select name="schedule[${scheduleIndex}][day]" class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200" required>
+                <option value="">Select Day</option>
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+            </select>
+            <input type="time" name="schedule[${scheduleIndex}][start_time]" class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200" required placeholder="Start Time">
+            <input type="time" name="schedule[${scheduleIndex}][end_time]" class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200" required placeholder="End Time">
+            <input type="text" name="schedule[${scheduleIndex}][location]" class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200" required placeholder="Location">
+            <button type="button" class="remove-schedule-row bg-red-500 text-white px-3 py-1 mb-3 rounded">Remove</button>
+        </div>`;
+            $('#schedule-list').append(row);
+            scheduleIndex++;
+        });
+
+        // Remove row
+        $(document).on('click', '.remove-schedule-row', function() {
+            $(this).closest('.schedule-row').remove();
+        });
+    </script>
 @endsection

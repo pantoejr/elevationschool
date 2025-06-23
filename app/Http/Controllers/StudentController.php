@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attachment;
-use App\Models\Installment;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\StudentSection;
@@ -27,6 +26,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
+
         return view('students.index', [
             'title' => 'Students',
             'students' => $students,
@@ -36,6 +36,7 @@ class StudentController extends Controller
     public function create()
     {
         $sections = Section::with('course')->where('status', 'active')->get();
+
         return view('students.create', [
             'title' => 'Create Student',
             'sections' => $sections,
@@ -78,7 +79,6 @@ class StudentController extends Controller
 
             $section = Section::findOrFail($request->section_id);
             $courseName = $section->course->name ?? null;
-
 
             if ($request->hasFile('photo')) {
                 $photoPath = $this->uploadFile($request->file('photo'), 'students/photos');
@@ -131,12 +131,14 @@ class StudentController extends Controller
             ]);
 
             DB::commit();
+
             return to_route('students.index')
                 ->with('success', 'Student inserted successfully')
                 ->with('flag', 'success');
         } catch (Exception $ex) {
             DB::rollBack();
-            return back()->with('success', 'Error inserting student record ' . $ex->getMessage())
+
+            return back()->with('success', 'Error inserting student record '.$ex->getMessage())
                 ->with('flag', 'error');
         }
     }
@@ -215,12 +217,14 @@ class StudentController extends Controller
             ]);
 
             DB::commit();
+
             return to_route('students.index')
                 ->with('success', 'Student record updated successfully')
                 ->with('flag', 'success');
         } catch (Exception $ex) {
             DB::rollBack();
-            return back()->with('success', 'Error updating student record ' . $ex->getMessage())
+
+            return back()->with('success', 'Error updating student record '.$ex->getMessage())
                 ->with('flag', 'error');
         }
     }
@@ -232,6 +236,7 @@ class StudentController extends Controller
         $sections = Section::where('status', 'active')
             ->whereNotIn('id', $assignedSectionIds)
             ->get();
+
         return view('students.show', [
             'student' => $student,
             'title' => 'Student Details',
@@ -243,11 +248,11 @@ class StudentController extends Controller
     {
         Storage::delete($student->photo);
         $student->delete();
+
         return to_route('students.index')
             ->with('success', 'Student deleted successfully')
             ->with('flag', 'success');
     }
-
 
     public function destroyStudentAttachment(Student $student, Attachment $attachment)
     {
@@ -284,41 +289,44 @@ class StudentController extends Controller
     {
         try {
             $request->validate([
-                'attachments.*' => 'required'
+                'attachments.*' => 'required',
             ]);
             $this->handleStudentAttachments($request->file('attachments'), $student);
+
             return to_route('students.show', ['student' => $student])
                 ->with('success', 'Student document uploaded successfully')
                 ->with('flag', 'success');
         } catch (Exception $ex) {
-            return back()->with('success', 'Error uploading file' . $ex->getMessage())
+            return back()->with('success', 'Error uploading file'.$ex->getMessage())
                 ->with('flag', 'error');
         }
     }
 
     public function showStudentAttachment(Attachment $attachment)
     {
-        if (!Storage::exists($attachment->file_path)) {
+        if (! Storage::disk('public')->exists($attachment->file_path)) {
             abort(404, 'File not found');
         }
 
         $filename = $attachment->original_name ?? basename($attachment->file_path);
-
-        $mimeType = Storage::mimeType($attachment->file_path);
+        $mimeType = Storage::disk('public')->mimeType($attachment->file_path);
 
         $headers = [
             'Content-Type' => $mimeType,
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
         ];
 
-        return Storage::download($attachment->file_path, $filename, $headers);
+        $filePath = Storage::disk('public')->path($attachment->file_path);
+
+        return response()->download($filePath, $filename, $headers);
     }
 
     private function uploadFile($file, $directory)
     {
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = $file->getClientOriginalExtension();
-        $fileName = Str::slug($originalName) . '-' . uniqid() . '.' . $extension;
+        $fileName = Str::slug($originalName).'-'.uniqid().'.'.$extension;
+
         return $file->storeAs($directory, $fileName, 'public');
     }
 
@@ -340,6 +348,6 @@ class StudentController extends Controller
     {
         return Pdf::loadView('students.pdf', ['model' => $student])
             ->setPaper('A4', 'portrait')
-            ->download('student_profile_' . $student->first_name . '_' . $student->last_name . '_' . now()->format('Ymd') . '.pdf');
+            ->download('student_profile_'.$student->first_name.'_'.$student->last_name.'_'.now()->format('Ymd').'.pdf');
     }
 }
