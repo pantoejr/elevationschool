@@ -32,4 +32,8 @@ class Section extends Model
     public function sectionInstallments(){
         return $this->hasMany(SectionInstallment::class);
     }
+
+    public function students(){
+        return $this->hasMany(Student::class);
+    }
 }

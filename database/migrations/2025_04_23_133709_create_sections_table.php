@@ -22,7 +22,8 @@ return new class extends Migration
             $table->integer('no_of_students')->default(0);
             $table->decimal('course_cost', 8, 2);
             $table->enum('currency', ['USD', 'LRD']);
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('status', ['active', 'inactive', 'completed'])->default('active');
+            $table->json('schedule')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

@@ -20,7 +20,8 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
                         <div class="mb-4">
                             <label for="course_id" class="block text-sm font-medium text-gray-700">Course</label>
-                            <select name="course_id" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <select name="course_id" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                 <option value="0">Select Course</option>
                                 @foreach ($courses as $course)
                                     <option value="{{ $course->id }}">{{ $course->name }}</option>
@@ -32,7 +33,8 @@
                         </div>
                         <div class="mb-4">
                             <label for="faculty_id" class="block text-sm font-medium text-gray-700">Faculty</label>
-                            <select name="faculty_id" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <select name="faculty_id" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                 <option value="0">Select Faculty</option>
                                 @foreach ($faculties as $faculty)
                                     <option value="{{ $faculty->id }}">{{ $faculty->full_name }}</option>
@@ -46,14 +48,16 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
                         <div class="mb-4">
                             <label for="course_cost" class="block text-sm font-medium text-gray-700">Cost</label>
-                            <input type="number" name="course_cost" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <input type="number" name="course_cost" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                             @error('course_cost')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mb-4">
                             <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
-                            <select  name="currency" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <select name="currency" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                 <option value="USD">USD</option>
                                 <option value="LRD">LRD</option>
                             </select>
@@ -65,24 +69,28 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
                         <div class="mb-4">
                             <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
-                            <input type="date" name="start_date" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <input type="date" name="start_date" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                             @error('start_date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mb-4">
                             <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
-                            <input type="date" name="end_date" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <input type="date" name="end_date" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                             @error('end_date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="mb-4">
-                            <label for="max_students" class="block text-sm font-medium text-gray-700">Max No. Of Students</label>
-                            <input type="number" name="max_students" required class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
+                            <label for="max_students" class="block text-sm font-medium text-gray-700">Max No. Of
+                                Students</label>
+                            <input type="number" name="max_students" required
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                             @error('max_students')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -90,7 +98,7 @@
                         <div class="mb-4">
                             <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                             <select name="status" id="status"
-                                class="mt-1 block w-full border-gray-300 p-4 border border-gray-300  rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200">
+                                class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200">
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
                             </select>
@@ -99,7 +107,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-between pt-6  border-gray-200">
                         <a href="{{ route('sections.index') }}"
                             class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">

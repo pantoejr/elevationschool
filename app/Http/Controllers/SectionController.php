@@ -8,6 +8,7 @@ use App\Models\Installment;
 use App\Models\Section;
 use App\Models\SectionInstallment;
 use App\Models\Student;
+use App\Models\StudentSection;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -23,6 +24,7 @@ class SectionController extends Controller
     public function index()
     {
         $sections = Section::all();
+
         return view('sections.index', [
             'title' => 'Sections',
             'sections' => $sections,
@@ -33,6 +35,7 @@ class SectionController extends Controller
     {
         $courses = Course::all();
         $faculties = Faculty::all();
+
         return view('sections.create', [
             'title' => 'Create Section',
             'faculties' => $faculties,
@@ -40,7 +43,8 @@ class SectionController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'name' => 'required|unique:sections,name,except,id',
             'course_id' => 'required|exists:courses,id',
@@ -53,7 +57,7 @@ class SectionController extends Controller
             'currency' => 'required|in:USD,LRD',
         ]);
 
-        try{
+        try {
 
             Section::create([
                 'name' => $request->name,
@@ -69,12 +73,11 @@ class SectionController extends Controller
                 'updated_by' => Auth::user()->name,
             ]);
 
-            return to_route('sections.index')->with('success','Section created successfully')
-            ->with('flag','success');
-        }
-        catch(Exception $ex){
-            return back()->with('success','Error creating section: ' . $ex->getMessage())
-            ->with('flag','error');
+            return to_route('sections.index')->with('success', 'Section created successfully')
+                ->with('flag', 'success');
+        } catch (Exception $ex) {
+            return back()->with('success', 'Error creating section: '.$ex->getMessage())
+                ->with('flag', 'error');
         }
     }
 
@@ -82,6 +85,7 @@ class SectionController extends Controller
     {
         $courses = Course::all();
         $faculties = Faculty::all();
+
         return view('sections.edit', [
             'title' => 'Edit Section',
             'section' => $section,
@@ -90,7 +94,8 @@ class SectionController extends Controller
         ]);
     }
 
-    public function update(Request $request, Section $section){
+    public function update(Request $request, Section $section)
+    {
         $request->validate([
             'name' => 'required|unique:sections,name,'.$section->id,
             'course_id' => 'required|exists:courses,id',
@@ -103,7 +108,7 @@ class SectionController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        try{
+        try {
             $section->update([
                 'name' => $request->name,
                 'course_id' => $request->course_id,
@@ -117,12 +122,11 @@ class SectionController extends Controller
                 'updated_by' => Auth::user()->name,
             ]);
 
-            return to_route('sections.index')->with('success','Section updated successfully')
-            ->with('flag','success');
-        }
-        catch(Exception $ex){
-            return back()->with('success','Error updating section: ' . $ex->getMessage())
-            ->with('flag','error');
+            return to_route('sections.index')->with('success', 'Section updated successfully')
+                ->with('flag', 'success');
+        } catch (Exception $ex) {
+            return back()->with('success', 'Error updating section: '.$ex->getMessage())
+                ->with('flag', 'error');
         }
     }
 
@@ -134,6 +138,7 @@ class SectionController extends Controller
 
         $installments = Installment::whereNotIn('id', $assignInstallmentsId)
             ->get();
+
         return view('sections.show', [
             'title' => 'Section Details',
             'section' => $section,
@@ -143,23 +148,37 @@ class SectionController extends Controller
 
     public function destroy(Section $section)
     {
-        try{
+        try {
             $section->delete();
-            return to_route('sections.index')->with('success','Section deleted successfully')
-            ->with('flag','success');
-        }
-        catch(Exception $ex){
-            return back()->with('success','Error deleting section: ' . $ex->getMessage())
-            ->with('flag','error');
+
+            return to_route('sections.index')->with('success', 'Section deleted successfully')
+                ->with('flag', 'success');
+        } catch (Exception $ex) {
+            return back()->with('success', 'Error deleting section: '.$ex->getMessage())
+                ->with('flag', 'error');
         }
     }
-    
+
     public function toggleStatus(Section $section)
     {
         $section->status = $section->status === 'active' ? 'inactive' : 'active';
         $section->save();
 
-        return to_route('sections.index')->with('success','Section status updated successfully')
-        ->with('flag','success');
+        return to_route('sections.index')->with('success', 'Section status updated successfully')
+            ->with('flag', 'success');
+    }
+
+    public function studentsForSection(Section $section)
+    {
+        $studentIds = StudentSection::where('section_id', $section->id)
+            ->pluck('student_id');
+
+        $students = Student::whereIn('id', $studentIds)
+            ->select('id', 'last_name', 'first_name', 'middle_name')
+            ->get();
+
+        return response()->json([
+            'students' => $students,
+        ]);
     }
 }

@@ -117,6 +117,7 @@ Route::controller(SectionController::class)->group(function () {
     Route::get('sections/{section}/edit', 'edit')->name('sections.edit');
     Route::put('sections/{section}', 'update')->name('sections.update');
     Route::delete('sections/{section}', 'destroy')->name('sections.destroy');
+    Route::get('sections/{section}/students','studentsForSection')->name('sections.students')->can('view-student-sections');
 });
 
 Route::prefix('sections/{section}')->group(function () {
