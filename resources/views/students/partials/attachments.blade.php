@@ -9,7 +9,7 @@
             </button>
         </div>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-gray-200 dataTable">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col"
@@ -44,7 +44,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $attachment->file_type }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                            <td class="px-6 py-4 whitespace-nowrap text-md font-medium">
                                 @can('view-student-attachment')
                                     <a href="{{ route('showStudentAttachment', ['attachment' => $attachment]) }}"
                                         class="text-blue-600 hover:text-blue-900 mr-4">
@@ -58,7 +58,8 @@
                                     </a>
                                 @endcan
                                 @can('delete-student-attachment')
-                                    <form action="{{ route('deleteStudentAttachment', ['student' => $model, 'attachment' => $attachment]) }}"
+                                    <form
+                                        action="{{ route('deleteStudentAttachment', ['student' => $model, 'attachment' => $attachment]) }}"
                                         style="display: inline-block" method="POST">
                                         @csrf
                                         <button type="submit" class="text-red-600 hover:text-red-900 delete-btn">
@@ -82,7 +83,8 @@
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm ">
-            <form action="{{ route('storeStudentAttachment', ['student' => $model]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('storeStudentAttachment', ['student' => $model]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="flex items-center justify-between p-4 md:p-5  rounded-t  border-gray-200">
                     <h3 class="text-xl font-semibold text-gray-900">
@@ -93,8 +95,8 @@
                         data-modal-hide="add-student-document-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>
@@ -104,7 +106,8 @@
                         <input type="hidden" name="student_id" value="{{ $model->id }}">
                         <div class="mb-4">
                             <label for="attachments" class="block mb-3 text-sm font-medium text-gray-700">File</label>
-                            <input type="file" name="attachments[]" multiple required class="w-full px-4 py-2 border border-gray-300 rounded-md transition duration-150" />
+                            <input type="file" name="attachments[]" multiple required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md transition duration-150" />
                             @error('attachments')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror

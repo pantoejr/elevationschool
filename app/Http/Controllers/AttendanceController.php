@@ -18,7 +18,7 @@ class AttendanceController extends Controller
     {
         $attendances = Attendance::all();
 
-        return view('attendance.index', [
+        return view('attendances.index', [
             'title' => 'Attendances',
             'attendances' => $attendances,
         ]);
@@ -62,5 +62,45 @@ class AttendanceController extends Controller
         return to_route('attendances.index')
             ->with('success', 'Attendance recorded successfully')
             ->with('flag', 'success');
+    }
+
+    public function edit(Attendance $attendance)
+    {
+        $sections = Section::all();
+
+        return view('attendances.edit', [
+            'title' => 'Edit Attendance',
+            'attendance' => $attendance,
+            'sections' => $sections,
+        ]);
+    }
+
+    public function update(Request $request, Attendance $attendance)
+    {
+        $request->validate([
+            'section_id' => 'required|exists:sections,id',
+            'date' => 'required|date',
+            'status' => 'required|in:present,absent,late',
+            'note' => 'nullable|string',
+        ]);
+
+        $attendance->update([
+            'section_id' => $request->section_id,
+            'date' => $request->date,
+            'status' => $request->status,
+            'note' => $request->note,
+        ]);
+
+        return to_route('attendances.index')
+            ->with('success', 'Attendance updated successfully')
+            ->with('flag', 'success');
+    }
+
+    public function show(Attendance $attendance)
+    {
+        return view('attendances.show', [
+            'title' => 'Attendance Details',
+            'attendance' => $attendance,
+        ]);
     }
 }

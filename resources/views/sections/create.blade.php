@@ -101,6 +101,7 @@
                                 class="mt-1 block w-full p-4 border border-gray-300 rounded-md  focus:border-blue-500 focus:ring focus:ring-blue-200">
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
+                                <option value="completed">Completed</option>
                             </select>
                             @error('status')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>

@@ -71,6 +71,8 @@
                             <option value="active" {{ $model->status == 'active' ? 'selected' : '' }}>Active</option>
                             <option value="inactive" {{ $model->status == 'inactive' ? 'selected' : '' }}>Inactive
                             </option>
+                            <option value="completed" {{ $model->status == 'completed' ? 'selected' : '' }}>Completed
+                            </option>
                         </select>
                     </div>
                 </div>

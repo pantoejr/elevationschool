@@ -12,6 +12,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SectionInstallmentController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentInvioceController;
 use App\Http\Controllers\StudentSectionController;
 use App\Http\Controllers\SystemVariableController;
 use App\Http\Controllers\UserController;
@@ -33,13 +34,13 @@ Route::controller(PermissionController::class)->group(function () {
 });
 
 Route::controller(PaymentController::class)->group(function () {
-    Route::get('payments','index')->name('payments.index');
-    Route::get('payments/create','create')->name('payments.create');
-    Route::post('payments/store','store')->name('payments.store');
-    Route::get('payments/get_student','getStudent')->name('payments.getStudent');
+    Route::get('payments', 'index')->name('payments.index');
+    Route::get('payments/create', 'create')->name('payments.create');
+    Route::post('payments/store', 'store')->name('payments.store');
+    Route::get('payments/get_student', 'getStudent')->name('payments.getStudent');
     Route::get('payments/{payment}/edit', 'edit')->name('payments.edit');
     Route::put('payments/{payment}/update', 'update')->name('payments.update');
-    Route::get('payments/{payment}','show')->name('payments.show');
+    Route::get('payments/{payment}', 'show')->name('payments.show');
     Route::delete('payments/{payment}', 'destroy')->name('payments.destroy');
     Route::get('payments/{payment}/print', 'previewPdf')->name('payments.previewPdf');
     Route::get('payments/{payment}/download', 'downloadPdf')->name('payments.downloadPdf');
@@ -98,7 +99,6 @@ Route::controller(FacultyController::class)->group(function () {
     Route::delete('faculties/{faculty}', 'destroy')->name('faculties.destroy')->can('delete-faculty');
 });
 
-
 Route::controller(CourseController::class)->group(function () {
     Route::get('courses', 'index')->name('courses.index');
     Route::get('courses/create', 'create')->name('courses.create');
@@ -117,7 +117,7 @@ Route::controller(SectionController::class)->group(function () {
     Route::get('sections/{section}/edit', 'edit')->name('sections.edit');
     Route::put('sections/{section}', 'update')->name('sections.update');
     Route::delete('sections/{section}', 'destroy')->name('sections.destroy');
-    Route::get('sections/{section}/students','studentsForSection')->name('sections.students')->can('view-student-sections');
+    Route::get('sections/{section}/students', 'studentsForSection')->name('sections.students')->can('view-student-sections');
 });
 
 Route::prefix('sections/{section}')->group(function () {
@@ -137,9 +137,9 @@ Route::controller(StudentController::class)->group(function () {
     Route::get('students/{student}/edit', 'edit')->name('students.edit');
     Route::put('students/{student}', 'update')->name('students.update');
     Route::delete('students/{student}', 'destroy')->name('students.destroy');
-    Route::post('students/{student}/attachments/store','storeStudentAttachment')->name('storeStudentAttachment');
-    Route::get('students/attachment/{attachment}','showStudentAttachment')->name('showStudentAttachment');
-    Route::post('students/{student}/attachment/{attachment}','destroyStudentAttachment')->name('deleteStudentAttachment');
+    Route::post('students/{student}/attachments/store', 'storeStudentAttachment')->name('storeStudentAttachment');
+    Route::get('students/attachment/{attachment}', 'showStudentAttachment')->name('showStudentAttachment');
+    Route::post('students/{student}/attachment/{attachment}', 'destroyStudentAttachment')->name('deleteStudentAttachment');
     Route::get('students/{student}/download-profile-pdf', 'downloadProfilePdf')->name('students.downloadProfilePdf');
 });
 
@@ -150,6 +150,7 @@ Route::prefix('students/{student}')->group(function () {
         Route::put('sections/{section}', 'update')->name('studentSections.update')->can('update-student-section');
         Route::delete('sections/{section}', 'destroy')->name('studentSections.destroy')->can('delete-student-section');
     });
+    Route::controller(StudentInvioceController::class)->group(function () {});
 });
 
 Route::controller(InstallmentController::class)->group(function () {
@@ -162,7 +163,7 @@ Route::controller(InstallmentController::class)->group(function () {
     Route::delete('installments/{installment}', 'destroy')->name('installments.destroy')->can('delete-installment');
 });
 
-Route::controller(AttendanceController::class)->group(function(){
+Route::controller(AttendanceController::class)->group(function () {
     Route::get('attendances', 'index')->name('attendances.index')->can('view-attendances');
     Route::get('attendances/create', 'create')->name('attendances.create')->can('add-attendance');
     Route::post('attendances', 'store')->name('attendances.store')->can('add-attendance');
@@ -245,6 +246,7 @@ Route::get('/generate-permissions', function () {
         'delete-student-attachment',
         'download-student-attachment',
         'view-attendances',
+        'view-attendance-details',
         'add-attendance',
         'edit-attendance',
         'update-attendance',
@@ -257,5 +259,6 @@ Route::get('/generate-permissions', function () {
     $superadminRole = Role::firstOrCreate(['name' => 'Superadmin']);
 
     $superadminRole->syncPermissions($permissions);
+
     return 'Permissions generated and assigned to Superadmin successfully!';
 });

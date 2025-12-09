@@ -256,9 +256,6 @@ class StudentController extends Controller
 
     public function destroyStudentAttachment(Student $student, Attachment $attachment)
     {
-        // if ($attachment->attachmentable()->student->id !== $student->id) {
-        //     abort(403, 'Unauthorized action: This attachment does not belong to the specified student');
-        // }
         DB::beginTransaction();
         try {
             $filePath = $attachment->file_path;

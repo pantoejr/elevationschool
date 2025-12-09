@@ -20,10 +20,16 @@
                 'view' => 'students.partials.attachments',
                 'icons' => 'file',
             ],
+            [
+                'id' => 'section4',
+                'title' => 'Invoices',
+                'view' => 'students.partials.invoices',
+                'icons' => 'book',
+            ],
         ];
     @endphp
 
     @can('view-section-details')
-        <x-section-navigation :sections="$sections" :model="$student" :classSections="$classSections"/>
+        <x-section-navigation :sections="$sections" :model="$student" :classSections="$classSections" />
     @endcan
 @endsection

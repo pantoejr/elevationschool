@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if ($fullName)
-        <title>{{ $fullName->value }} | {{ env('APP_NAME') }}</title>
+        <title>{{ $title }} | {{ $fullName->value }}</title>
     @else
         <title>{{ env('APP_NAME') }}</title>
     @endif
@@ -19,6 +19,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/buttons.dataTables.css') }}">
     @if ($favicon)
         <link rel="icon" href="{{ asset('storage/' . $favicon->value) }}" type="x-icon">
     @else
@@ -271,7 +272,45 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.dataTable').DataTable({});
+            $('.dataTable').DataTable({
+                layout: {
+                    topStart: {
+                        // buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5', 'print']
+                        buttons: [{
+                                extend: 'csvHtml5',
+                                title: '{{ $title }} Data export',
+                                exportOptions: {
+                                    columns: ':not(.noExport)'
+                                }
+                            },
+                            {
+                                extend: 'excelHtml5',
+                                title: '{{ $title }} Data export',
+                                exportOptions: {
+                                    columns: ':not(.noExport)'
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                orientation: 'potrait',
+                                pageSize: 'A4',
+                                title: '{{ $title }} Data export',
+                                exportOptions: {
+                                    columns: ':not(.noExport)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                orientation: 'potrait',
+                                title: '{{ $title }} Data export',
+                                exportOptions: {
+                                    columns: ':not(.noExport)'
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
             $('.delete-btn').on('click', function(event) {
                 event.preventDefault();
                 var form = $(this).closest('form');
@@ -294,6 +333,13 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+    <script src="{{ asset('assets/js/dataTables.buttons.js') }}"></script>
+    <script src="{{ asset('assets/js/buttons.dataTables.js') }}"></script>
+    <script src="{{ asset('assets/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/js/buttons.html5.min.js') }}"></script>
     @livewireScripts
 </body>
 

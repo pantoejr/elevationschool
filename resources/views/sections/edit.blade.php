@@ -114,6 +114,9 @@
                                     Active</option>
                                 <option value="inactive"
                                     {{ old('status', $section->status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                <option value="completed"
+                                    {{ old('status', $section->status) == 'completed' ? 'selected' : '' }}>Completed
+                                </option>
                             </select>
                             @error('status')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>

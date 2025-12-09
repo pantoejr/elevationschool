@@ -11,7 +11,7 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-gray-200 dataTable">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col"
@@ -33,7 +33,7 @@
                         </th>
 
                         <th scope="col"
-                            class="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
                             Actions
                         </th>
                     </tr>
@@ -41,7 +41,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
 
                     @foreach ($model->sectionInstallments as $sectionInstallment)
-                        <tr class="hover:bg-gray-50 transition duration-150">
+                        <tr class="hover:bg-gray-50 text-left transition duration-150">
                             <td class="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                                 {{ $loop->iteration }}
                             </td>
@@ -55,7 +55,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
                                 {{ $sectionInstallment->currency }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                            <td class="px-6 py-4 whitespace-nowrap text-left text-md font-medium">
                                 @can('edit-installment')
                                     <button type="button"
                                         data-modal-target="edit-installment-modal-{{ $sectionInstallment->id }}"
@@ -84,7 +84,8 @@
                             <div class="relative p-4 w-full max-w-2xl max-h-full">
                                 <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg shadow-sm">
-                                    <form action="{{ route('sectionInstallment.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
+                                    <form
+                                        action="{{ route('sectionInstallment.update', ['installment' => $sectionInstallment, 'section' => $model]) }}"
                                         method="POST">
                                         @method('PUT')
                                         @csrf
@@ -109,14 +110,15 @@
                                         <div class="p-4 md:p-5 space-y-4">
                                             <div class="grid grid-cols-1">
                                                 <input type="hidden" name="section_id" value="{{ $model->id }}">
-                                                
+
                                                 <div class="mb-4">
                                                     <label for="installment_id"
                                                         class="block text-sm font-medium text-gray-700">Installment</label>
                                                     <select name="installment_id" required
                                                         class="mt-1 block w-full p-4 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200">
                                                         @foreach ($installments as $installment)
-                                                            <option value="{{ $installment->id }}" {{ $sectionInstallment->installment_id == $installment->id ? 'selected' : '' }}>
+                                                            <option value="{{ $installment->id }}"
+                                                                {{ $sectionInstallment->installment_id == $installment->id ? 'selected' : '' }}>
                                                                 {{ $installment->name }}
                                                             </option>
                                                         @endforeach

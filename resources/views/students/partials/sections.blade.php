@@ -9,7 +9,7 @@
             </button>
         </div>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-gray-200 dataTable">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col"
@@ -50,7 +50,7 @@
                                         class="bg-red-200  p-1 rounded-lg text-red-800">{{ ucfirst($studentSection->status) }}</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                            <td class="px-6 py-4 whitespace-nowrap text-md font-medium">
                                 @can('edit-installment')
                                     <button type="button"
                                         data-modal-target="edit-student-section-modal-{{ $studentSection->id }}"

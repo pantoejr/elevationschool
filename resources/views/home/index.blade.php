@@ -83,7 +83,8 @@
             <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Recent Attendance</h3>
-                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
+                    <a href="{{ route('attendances.index') }}"
+                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
@@ -151,7 +152,8 @@
             <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Sections Overview</h3>
-                    <a href="{{ route('sections.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
+                    <a href="{{ route('sections.index') }}"
+                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">

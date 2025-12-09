@@ -21,7 +21,7 @@
                             Name
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
                             Actions
                         </th>
                     </tr>
@@ -32,14 +32,14 @@
                     @else
                         @foreach ($roles as $role)
                             <tr class="hover:bg-gray-50 transition duration-150">
-                                <td class="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                                <td class="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-500">
                                     {{ $loop->iteration }}
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
                                     {{ $role->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                                <td class="px-6 py-4 whitespace-nowrap text-left text-md font-medium">
                                     <a href="{{ route('roles.edit', ['role' => $role]) }}"
                                         class="text-yellow-600 hover:text-yellow-900 mr-4">
                                         <i class="fas fa-edit"></i>

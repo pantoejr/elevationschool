@@ -34,8 +34,9 @@ class Student extends Model
         'is_new',
         'status',
         'created_by',
-        'updated_by'
+        'updated_by',
     ];
+
     public function attachments()
     {
         return $this->morphMany(Attachment::class, 'attachmentable');
@@ -46,7 +47,19 @@ class Student extends Model
         return $this->hasMany(Attendance::class);
     }
 
-    public function studentSections(){
+    public function studentSections()
+    {
         return $this->hasMany(StudentSection::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasManyThrough(
+            StudentInvoice::class,
+            StudentSection::class,
+            'student_id',
+            'student_section_id',
+            'id', 'id'
+        );
     }
 }

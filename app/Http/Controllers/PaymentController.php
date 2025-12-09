@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\PaymentHelper;
-use App\Models\Section;
-use App\Models\StudentSection;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use App\Models\Payment;
+use App\Models\Section;
 use App\Models\SectionInstallment;
 use App\Models\StudentInvoice;
+use App\Models\StudentSection;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use PhpParser\Node\Expr\Throw_;
 
 class PaymentController extends Controller
 {
@@ -28,18 +25,20 @@ class PaymentController extends Controller
     {
 
         $payments = Payment::all();
+
         return view('payments.index', [
             'title' => 'Payments',
-            'payments' => $payments
+            'payments' => $payments,
         ]);
     }
 
     public function create()
     {
         $sections = Section::all();
+
         return view('payments.create', [
             'title' => 'Payments',
-            'sections' => $sections
+            'sections' => $sections,
         ]);
     }
 
@@ -55,7 +54,7 @@ class PaymentController extends Controller
 
         return view('payments.studentlist', [
             'title' => '',
-            'students' => $students
+            'students' => $students,
         ]);
     }
 
@@ -80,7 +79,7 @@ class PaymentController extends Controller
                 $attachment = $request->file('attachment');
                 $attachmentPath = $attachment->storeAs(
                     'payments/attachment',
-                    time() . '_' . $attachment->getClientOriginalName(),
+                    time().'_'.$attachment->getClientOriginalName(),
                     'public'
                 );
             }
@@ -96,7 +95,7 @@ class PaymentController extends Controller
 
             // Fetch or create the student's invoice
             $studentInvoice = StudentInvoice::where('student_section_id', $studentSection->id)->first();
-            if (!$studentInvoice) {
+            if (! $studentInvoice) {
                 $studentInvoice = StudentInvoice::create([
                     'student_section_id' => $studentSection->id,
                     'invoice_id' => (string) $this->generateRandomNumericString(),
@@ -126,7 +125,9 @@ class PaymentController extends Controller
             $totalPaid = $alreadyPaid;
 
             foreach ($sectionInstallments as $sectionInstallment) {
-                if ($remainingPayment <= 0) break;
+                if ($remainingPayment <= 0) {
+                    break;
+                }
 
                 $installmentName = $sectionInstallment->installment->name ?? 'Installment';
                 $installmentAmount = $sectionInstallment->amount;
@@ -179,8 +180,9 @@ class PaymentController extends Controller
                 ->with('flag', 'success');
         } catch (Exception $ex) {
             DB::rollBack();
+
             return back()
-                ->with('success', 'Error: ' . $ex->getMessage())
+                ->with('success', 'Error: '.$ex->getMessage())
                 ->with('flag', 'error');
         }
     }
@@ -193,9 +195,21 @@ class PaymentController extends Controller
         ]);
     }
 
+    public function edit(Payment $payment)
+    {
+        $sections = Section::all();
+        return view('payments.edit', [
+            'title' => 'Edit Payment',
+            'payment' => $payment,
+            'sections' => $sections,
+        ]);
+
+    }
+
     public function destroy(Payment $payment)
     {
         $payment->delete();
+
         return redirect()->route('payments.index')
             ->with('success', 'Payment inserted successfully')
             ->with('flag', 'success');
@@ -204,22 +218,25 @@ class PaymentController extends Controller
     public function previewPdf(Payment $payment)
     {
         $pdf = Pdf::loadView('payments.pdf', ['payment' => $payment]);
-        return $pdf->stream('_receipt_' . $payment->studentInvoice->invoice_id . '_' . now()->format('Ymd') . '.pdf');
+
+        return $pdf->stream('_receipt_'.$payment->studentInvoice->invoice_id.'_'.now()->format('Ymd').'.pdf');
     }
 
     public function downloadPdf(Payment $payment)
     {
         $pdf = Pdf::loadView('payments.pdf', ['payment' => $payment]);
-        return $pdf->download('receipt_' . $payment->studentInvoice->invoice_id . '_' . now()->format('Ymd') . '.pdf');
+
+        return $pdf->download('receipt_'.$payment->studentInvoice->invoice_id.'_'.now()->format('Ymd').'.pdf');
     }
 
-    function generateRandomNumericString($length = 6)
+    public function generateRandomNumericString($length = 6)
     {
 
         $digits = '';
         for ($i = 0; $i < $length; $i++) {
             $digits .= random_int(0, 9);
         }
+
         return $digits;
     }
 }

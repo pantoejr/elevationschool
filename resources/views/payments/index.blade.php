@@ -7,12 +7,11 @@
                 <i class="fas fa-plus-circle"></i>
             </a>
         </div>
-
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto p-5">
             @if ($payments->isEmpty())
                 <p class="text-gray-700 text-center py-3">No record found...</p>
             @else
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="min-w-full divide-y divide-gray-200 dataTable">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
@@ -21,7 +20,7 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
-                                Name
+                                Invoice ID
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
@@ -29,10 +28,18 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
+                                Student
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
                                 Amount
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-right text-md font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider">
+                                Date
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-md font-medium text-gray-500 uppercase tracking-wider noExport">
                                 Actions
                             </th>
                         </tr>
@@ -44,16 +51,26 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                                     {{ $loop->iteration }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                                    {{ $payment->studentInvoice->studentSection->student->first_name . ' ' . $payment->studentInvoice->studentSection->student->middle_name . ' ' . $payment->studentInvoice->studentSection->student->last_name  }}
+                                <td class="px-6 text-left py-4 whitespace-nowrap text-md text-gray-500">
+                                    {{ $payment->student_invoice_id }}
                                 </td>
-                                 <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+                                <td class="px-6 text-left py-4 whitespace-nowrap text-md text-gray-500">
                                     {{ $payment->payment_reference }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+                                <td class="px-6 text-left py-4 whitespace-nowrap text-md text-gray-500">
+                                    <a
+                                        href="{{ route('students.show', ['student' => $payment->studentInvoice->studentSection->student]) }}">
+                                        {{ $payment->studentInvoice->studentSection->student->first_name . ' ' . $payment->studentInvoice->studentSection->student->middle_name . ' ' . $payment->studentInvoice->studentSection->student->last_name }}
+                                    </a>
+                                </td>
+
+                                <td class="px-6 py-4 text-left whitespace-nowrap text-md text-gray-500">
                                     ${{ $payment->amount_paid }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                                <td class="px-6 py-4 text-left whitespace-nowrap text-md text-gray-500">
+                                    {{ $payment->payment_date }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-left text-md font-medium">
                                     <a href="{{ route('payments.edit', ['payment' => $payment]) }}"
                                         class="text-yellow-600 hover:text-yellow-900 mr-4">
                                         <i class="fas fa-edit"></i>
@@ -70,7 +87,6 @@
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
-
                                 </td>
                             </tr>
                         @endforeach
@@ -78,6 +94,6 @@
                 </table>
             @endif
         </div>
-        
+
     </div>
 @endsection
